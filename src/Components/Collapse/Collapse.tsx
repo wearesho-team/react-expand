@@ -4,13 +4,13 @@ import * as PropTypes from "prop-types";
 import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 
 export interface CollapseProps {
-    controllElement: (arg: { state: boolean, onClick: () => void }) => JSX.Element;
+    controlElement: (arg: { state: boolean, onClick: () => void }) => JSX.Element;
     wrapperProps?: React.HTMLProps<HTMLDivElement>;    
     defaultOpened?: boolean;
 }
 
 export const CollapsePropTypes: {[P in keyof CollapseProps]: PropTypes.Validator<any>} = {
-    controllElement: PropTypes.func.isRequired,
+    controlElement: PropTypes.func.isRequired,
     wrapperProps: PropTypes.object,
     defaultOpened: PropTypes.bool
 };
@@ -35,7 +35,7 @@ export class Collapse extends React.Component<CollapseProps> {
     public render(): JSX.Element {
         return (
             <div {...this.props.wrapperProps} data-expand-keep={this.id}>
-                {this.props.controllElement({
+                {this.props.controlElement({
                     state: this.context.isExpanded(this.id),
                     onClick: this.context.changeExpandState(this.id)
                 })}
