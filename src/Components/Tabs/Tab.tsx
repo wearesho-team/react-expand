@@ -6,8 +6,7 @@ import {
     TabsContext,
     TabElementProps,
     TabsContextTypes,
-    TabElementPropTypes,
-    TabElementDefaultProps,
+    TabElementPropTypes
 } from "./TabsProps";
 
 export class Tab extends React.Component<TabElementProps> {
@@ -16,7 +15,6 @@ export class Tab extends React.Component<TabElementProps> {
         ...TabsContextTypes
     };
     public static readonly propTypes = TabElementPropTypes;
-    public static readonly defaultProps = TabElementDefaultProps;
 
     public readonly context: ExpandContext & TabsContext;
 
@@ -29,9 +27,15 @@ export class Tab extends React.Component<TabElementProps> {
     }
 
     public render(): JSX.Element {
+        const { tabId, ...childProps } = this.props;
+
         return (
-            <div {...this.props.wrapperProps} data-expand-keep={this.props.tabId}>
-                {this.context.isExpanded(this.props.tabId) && this.props.children}
+            <div
+                {...childProps}
+                className="tab"
+                data-expand-keep={tabId}
+            >
+                {this.context.isExpanded(tabId) && this.props.children}
             </div>
         );
     }

@@ -5,18 +5,21 @@ import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 
 export interface CollapseProps {
     controlElement: (arg: { state: boolean, onClick: () => void }) => JSX.Element;
-    wrapperProps?: React.HTMLProps<HTMLDivElement>;    
+    wrapperProps?: React.HTMLProps<HTMLDivElement>;
     defaultOpened?: boolean;
+    collapseId?: string;
 }
 
 export const CollapsePropTypes: {[P in keyof CollapseProps]: PropTypes.Validator<any>} = {
     controlElement: PropTypes.func.isRequired,
     wrapperProps: PropTypes.object,
-    defaultOpened: PropTypes.bool
+    defaultOpened: PropTypes.bool,
+    collapseId: PropTypes.string
 };
 
 export const CollapseDefaultProps: {[P in keyof CollapseProps]?: CollapseProps[P]} = {
-    wrapperProps: {}
+    wrapperProps: {},
+    collapseId: `collapse-${Date.now().toString() + Math.random().toString()}`
 };
 
 export class Collapse extends React.Component<CollapseProps> {
@@ -26,21 +29,23 @@ export class Collapse extends React.Component<CollapseProps> {
 
     public readonly context: ExpandContext;
 
-    private id = `collapse-${Date.now().toString() + Math.random().toString()}`;
-
     public componentDidMount() {
-        this.context.changeExpandState(this.id, this.props.defaultOpened)();
+        this.context.changeExpandState(this.props.collapseId, !!this.props.defaultOpened)();
     }
 
     public render(): JSX.Element {
         return (
-            <div {...this.props.wrapperProps} data-expand-keep={this.id}>
-                {this.props.controlElement({
-                    state: this.context.isExpanded(this.id),
-                    onClick: this.context.changeExpandState(this.id)
-                })}
-                {this.context.isExpanded(this.id) && this.props.children}
+            <div {...this.props.wrapperProps} data-expand-keep={this.props.collapseId}>
+                {this.controlElement()}
+                {this.context.isExpanded(this.props.collapseId) && this.props.children}
             </div>
         );
+    }
+
+    protected controlElement = (): void => {
+        this.props.controlElement({
+            state: this.context.isExpanded(this.props.collapseId),
+            onClick: this.context.changeExpandState(this.props.collapseId)
+        });
     }
 }

@@ -3,12 +3,12 @@ import * as PropTypes from "prop-types";
 
 import { ExpandContext, ExpandContextTypes } from "../../../src/Components/ExpandController";
 
-export interface ComponentWithContextProps {
+export interface ComponentWithContextProps extends React.HTMLAttributes<HTMLDivElement> {
     expandKey: string;
 }
 
 export const ComponentWithContextPropTypes: {[P in keyof ComponentWithContextProps]: PropTypes.Validator<any>} = {
-    expandKey: PropTypes.string.isRequired
+    expandKey: PropTypes.string.isRequired,
 };
 
 export class ComponentWithContext extends React.Component<ComponentWithContextProps> {
@@ -18,27 +18,19 @@ export class ComponentWithContext extends React.Component<ComponentWithContextPr
     public readonly context: ExpandContext;
 
     public render(): JSX.Element {
+        const {expandKey, ...childProps} = this.props;
         return (
-            <React.Fragment>
+            <div
+                className="component-with-context"
+                {...childProps}
+            >
+                <span>I have context</span>
                 <button
                     type="button"
-                    className="not-expand-button"
-                    onClick={this.context.changeExpandState(this.props.expandKey)}
+                    className="expand-button"
+                    onClick={this.context.changeExpandState(expandKey)}
                 />
-                <div
-                    className="component-with-context"
-                    data-expand={this.props.expandKey}
-                    data-is-open={this.context.isExpanded(this.props.expandKey)}
-                >
-                    <span>I have context</span>
-                    <button
-                        type="button"
-                        className="expand-button"
-                        data-expand={this.props.expandKey}
-                        onClick={this.context.changeExpandState(this.props.expandKey)}
-                    />
-                </div>
-            </React.Fragment>
+            </div>
         );
     }
 }

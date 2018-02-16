@@ -1,40 +1,29 @@
 import { expect } from "chai";
 import * as React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
 import { ReactWrapper, mount } from "enzyme";
 
 import { ComponentWithContext } from "../helpers/ComponentWithContext";
 
-import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
+import { ExpandContext, ExpandController, ExpandContextTypes } from "../../../src/Components/ExpandController";
 
 describe("<ExpandController/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
 
     let context: ExpandContext;
 
-    const container = document.createElement("div");
-    container.id = "content";
-    document.body.appendChild(container);
-
     beforeEach(() => {
-        context = (new ExpandController({})).getChildContext();
         wrapper = mount(
-            <ComponentWithContext expandKey="expand" />,
-            { context }
+            <ExpandController>
+                <ComponentWithContext expandKey="expand" data-expand="expand" />,
+            </ExpandController>
         );
 
-        render(
-            <ExpandController>
-                <ComponentWithContext expandKey="expand" />
-            </ExpandController>,
-            document.body.querySelector("#content")
-        );
+        document.querySelector("#root").appendChild(wrapper.getDOMNode());
+        context = wrapper.find(ComponentWithContext).instance().context;
     });
 
     afterEach(() => {
-        unmountComponentAtNode(document.body.querySelector("#content"));
-        wrapper.unmount();
-        context = undefined;
+        document.querySelector("#root").removeChild(wrapper.getDOMNode());
     });
 
     it("Should return `false` on `isExpanded` if element not expanded", () => {
@@ -68,18 +57,35 @@ describe("<ExpandController/>", () => {
     });
 
     it("Should change expand state on clicking button with `changeExpandState` event", () => {
-        const parent = document.querySelector(".component-with-context");
-
-        expect(parent.getAttribute("data-is-open")).to.equals("false");
-        document.querySelector<HTMLButtonElement>(".expand-button").click();
-        expect(parent.getAttribute("data-is-open")).to.equals("true");
+        expect(context.isExpanded("expand")).to.be.false;
+        wrapper.find(".expand-button").simulate("click");
+        expect(context.isExpanded("expand")).to.be.true;
     });
 
-    it("Should not change expand state on click button without data attribute", () => {
-        const parent = document.querySelector(".component-with-context");
+    it("Should change expand state to false if click event triggered on element without data attribute", () => {
+        wrapper.find(".expand-button").simulate("click");
+        expect(context.isExpanded("expand")).to.be.true;
+        document.body.click();
+        expect(context.isExpanded("expand")).to.be.false;
+    });
 
-        expect(parent.getAttribute("data-is-open")).to.equals("false");
-        document.querySelector<HTMLButtonElement>(".not-expand-button").click();
-        expect(parent.getAttribute("data-is-open")).to.equals("false");
+    it("Shoudld not change state if click event triggered on element when `data-expand-keep` passed", () => {
+        document.querySelector("#root").removeChild(wrapper.getDOMNode());
+
+        wrapper = mount(
+            <ExpandController>
+                <ComponentWithContext expandKey="expand-keep" data-expand-keep="expand-keep" />,
+            </ExpandController>
+        );
+
+        document.querySelector("#root").appendChild(wrapper.getDOMNode());
+        context = wrapper.find(ComponentWithContext).instance().context;
+
+        wrapper.find(".expand-button").simulate("click");
+        expect(context.isExpanded("expand-keep")).to.be.true;
+        document.body.click();
+        expect(context.isExpanded("expand-keep")).to.be.true;
+        wrapper.find(".expand-button").simulate("click");
+        expect(context.isExpanded("expand-keep")).to.be.false;
     });
 });

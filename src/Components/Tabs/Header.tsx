@@ -1,18 +1,28 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { TabElementProps, TabElementPropTypes, TabElementDefaultProps } from "./TabsProps";
+import {
+    TabsContext,
+    TabElementProps,
+    TabsContextTypes,
+    TabElementPropTypes
+} from "./TabsProps";
 
 export class Header extends React.Component<TabElementProps> {
+    public static readonly contextTypes = TabsContextTypes;
     public static readonly propTypes = TabElementPropTypes;
-    public static readonly defaultProps = TabElementDefaultProps;
+
+    public readonly context: TabsContext;
 
     public render(): JSX.Element {
+        const { tabId, ...childProps } = this.props;
+
         return (
             <div
-                {...this.props.wrapperProps}
+                {...childProps}
                 onClick={this.handleTabActivate}
-                data-expand-keep={this.props.tabId}
+                data-expand-keep={tabId}
+                className="header"
             >
                 {this.props.children}
             </div>
@@ -20,7 +30,7 @@ export class Header extends React.Component<TabElementProps> {
     }
 
     protected handleTabActivate = (event: React.MouseEvent<HTMLDivElement>): void => {
-        this.props.wrapperProps.onClick && this.props.wrapperProps.onClick(event);
+        this.props.onClick && this.props.onClick(event);
 
         if (!event.defaultPrevented) {
             this.context.changeActiveTab(this.props.tabId);

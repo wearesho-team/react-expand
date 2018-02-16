@@ -21,7 +21,7 @@ export class TabsController extends React.Component<{}, TabsControllerState> {
         };
     }
 
-    public getChildContextTypes(): TabsContext {
+    public getChildContext(): TabsContext {
         return {
             changeActiveTab: this.changeActiveTab,
             unregisterTab: this.unregisterTab,
@@ -43,5 +43,9 @@ export class TabsController extends React.Component<{}, TabsControllerState> {
 
     protected unregisterTab = (id: string) => this.state.tabs.delete(id);
 
-    protected registerTab = (id: string) => this.state.tabs.add(id);
+    protected registerTab = (id: string) => {
+        this.state.tabs.add(id);
+
+        this.changeActiveTab(id);
+    };
 }

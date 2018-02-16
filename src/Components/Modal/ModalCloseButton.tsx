@@ -18,7 +18,7 @@ export class ModalCloseButton extends React.Component<React.HTMLProps<HTMLButton
             </button>
         );
     }
-    
+
     protected handleClose = (event: React.MouseEvent<HTMLButtonElement>): void => {
         this.props.onClick && this.props.onClick(event);
         if (!event.defaultPrevented) {

@@ -15,11 +15,7 @@ export class Modal extends React.Component<ModalProps> {
 
     public readonly context: ExpandContext;
 
-    public getChildContextTypes(): ModalContext {
-        return {
-            onClose: this.context.changeExpandState(this.id)
-        };
-    }
+    private container: HTMLDivElement;
 
     constructor(props) {
         super(props);
@@ -28,45 +24,53 @@ export class Modal extends React.Component<ModalProps> {
         this.container.id = Modal.containerName;
     }
 
-    private container: HTMLDivElement;
-    private id = `modal-${Date.now().toString() + Math.random().toString()}`;
+    public getChildContext(): ModalContext {
+        return {
+            onClose: this.context.changeExpandState(this.props.modalId)
+        };
+    }
 
     public componentDidMount() {
-        this.context.changeExpandState(this.id, this.props.defaultOpened)();
+        this.context.changeExpandState(this.props.modalId, !!this.props.defaultOpened)();
 
         if (!document.getElementById(Modal.containerName)) {
-            document.appendChild(this.container);
+            document.body.appendChild(this.container);
         }
+
+        this.setBodyClassName();
     }
 
     public componentWillUnmount() {
-        document.removeChild(this.container);
+        document.body.removeChild(this.container);
     }
 
     public componentDidUpdate() {
-        if (document.body.classList.contains("modal-open") && !this.context.isExpanded(this.id)) {
-            document.body.classList.remove("modal-open");
-        }
-
-        if (!document.body.classList.contains("modal-open") && this.context.isExpanded(this.id)) {
-            document.body.classList.add("modal-open");
-        }
+        this.setBodyClassName();
     }
 
     public render(): JSX.Element {
-        const dataAttr = `data-expand-${!this.props.closeOnOutside ? "keep" : ""}`;
+        const dataAttr = `data-expand${!this.props.closeOnOutside ? "-keep" : ""}`;
 
         return ReactDOM.createPortal(
-            this.context.isExpanded(this.id) && (
+            this.context.isExpanded(this.props.modalId) && (
                 <div
                     {...this.props.wrapperProps}
-                    {...{ [dataAttr]: this.id }}
-                    data-expand-keep={this.props.closeOnOutside}
+                    {...{ [dataAttr]: this.props.modalId }}
                 >
                     {this.props.children}
                 </div>
             ),
             this.container
         );
+    }
+
+    protected setBodyClassName = () => {
+        if (document.body.classList.contains("modal-open") && !this.context.isExpanded(this.props.modalId)) {
+            document.body.classList.remove("modal-open");
+        }
+
+        if (!document.body.classList.contains("modal-open") && this.context.isExpanded(this.props.modalId)) {
+            document.body.classList.add("modal-open");
+        }
     }
 }

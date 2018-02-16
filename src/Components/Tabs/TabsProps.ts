@@ -1,17 +1,11 @@
 import * as PropTypes from "prop-types";
 
-export interface TabElementProps {
-    wrapperProps?: React.HTMLProps<HTMLDivElement>;
+export interface TabElementProps extends React.HTMLProps<HTMLDivElement> {
     tabId: string
 }
 
 export const TabElementPropTypes: {[P in keyof TabElementProps]: PropTypes.Validator<any>} = {
     tabId: PropTypes.string.isRequired,
-    wrapperProps: PropTypes.object
-};
-
-export const TabElementDefaultProps: {[P in keyof TabElementProps]?: TabElementProps[P]} = {
-    wrapperProps: {}
 };
 
 export interface TabsContext {
