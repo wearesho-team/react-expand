@@ -30,7 +30,7 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
             changeExpandState: this.getExpandOpenHandler,
             getState: this.getExpandState,
             isExpanded: this.isExpanded,
-        };
+        }
     }
 
     public componentDidMount() {
@@ -70,8 +70,13 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
         const shouldBeDisabled = new Set(Object.keys(this.state.expanded));
 
         const filter = (node: HTMLElement): boolean => {
-            const attr = node.getAttribute("data-expand");
-            !!attr && shouldBeDisabled.delete(attr);
+            const keepAttr = node.getAttribute("data-expand-keep");
+            if (!!keepAttr) {
+                return shouldBeDisabled.delete(keepAttr);
+            }
+
+            const expandAttr = node.getAttribute("data-expand");
+            !!expandAttr && shouldBeDisabled.delete(expandAttr);
             return (node.parentElement instanceof HTMLElement) && filter(node.parentElement);
         };
         target instanceof HTMLElement && filter(target);
