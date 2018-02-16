@@ -29,7 +29,7 @@ Controlling expand state
     public render(): JSX.Element {
       return (
         <React.Fragment>
-            button 
+            <button 
                onClick={this.context.changeExpandState("custom-expand-string")}
                data-expand="custom-expand-string" // you must specify `data-expand` on elements outside controlled element
             />
