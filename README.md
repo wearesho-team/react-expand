@@ -4,7 +4,7 @@ Component for controlling expand state of each elements on page.
 
 ## Usage
 
-Somwhere in code
+Somewhere in code
 ```JavaScript
   <ExpandController>
       <SomeComponent/>
@@ -29,18 +29,58 @@ Controlling expand state
     public render(): JSX.Element {
       return (
         <React.Fragment>
-            <button 
-               onClick={this.context.changeExpandState("custom-expand-string")}
-               data-expand="custom-expand-string" // you must specify `data-expand` on elements outside controlled element
-            />
-            <div // controlled element
+// In this case expand state changing on click button 
+// and click on zone without data attribute "custom-expand-string"
+            <div
               className={this.context.isExpanded("custom-expand-string") ? "visible" : "hidden"}
               data-expand="custom-expand-string"
             >
                 <button onClick={this.context.changeExpandState("custom-expand-string")}/>
             </div>
+ // In this case expand state changing only on click button
+            <div data-expand-keep="more-custom-expand-string">
+              <button onClick={this.context.changeExpandState("more-custom-expand-string")}/>
+            </div>
         </React.Fragment>
       );
     }
   }
+```
+### Pesets
+
+Modal
+```JavaScript
+ <Modal defaultOpened closeOnOutside wrapperProps={...HTMLDivElementProps}>
+    ...
+    <ModalCloseButton {...HTMLButtonElementProps}/>
+ </Modal>
+```
+
+Collapse
+```JavaScript
+ <Collapse 
+    controlElement={({state: boolean, onClick: () => void}) => ...someComponent} 
+    wrapperProps={...HTMLDivElementProps}
+    defaultOpened 
+ >
+    ...
+ </Collapse>
+```
+
+Tabs
+```JavaScript
+ <TabsController>
+    <Header tabId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
+      ...
+    </Header>
+    <Header tabId="tab_2" {...HTMLDivElementProps} >
+      ...
+    </Header>
+    <Tab tabId="tab_1" {...HTMLDivElementProps} >
+      ...
+    </Tab>
+    <Tab tabId="tab_2" {...HTMLDivElementProps}>
+      ...
+    </Tab>
+ </TabsController>
 ```
