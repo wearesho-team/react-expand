@@ -22,7 +22,6 @@ export class Header extends React.Component<TabElementProps> {
                 {...childProps}
                 onClick={this.handleTabActivate}
                 data-expand-keep={tabId}
-                className="header"
             >
                 {this.props.children}
             </div>

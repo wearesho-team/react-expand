@@ -32,7 +32,6 @@ export class Tab extends React.Component<TabElementProps> {
         return (
             <div
                 {...childProps}
-                className="tab"
                 data-expand-keep={tabId}
             >
                 {this.context.isExpanded(tabId) && this.props.children}

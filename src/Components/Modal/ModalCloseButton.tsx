@@ -13,6 +13,7 @@ export class ModalCloseButton extends React.Component<React.HTMLProps<HTMLButton
             <button
                 {...this.props}
                 onClick={this.handleClose}
+                type="button"
             >
                 {this.props.children}
             </button>

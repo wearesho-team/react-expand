@@ -17,6 +17,15 @@ export class Modal extends React.Component<ModalProps> {
 
     private container: HTMLDivElement;
 
+    private overlayStyle: React.CSSProperties = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        position: "fixed",
+        ...this.props.style
+    };
+
     constructor(props) {
         super(props);
 
@@ -49,13 +58,17 @@ export class Modal extends React.Component<ModalProps> {
     }
 
     public render(): JSX.Element {
-        const dataAttr = `data-expand${!this.props.closeOnOutside ? "-keep" : ""}`;
+        const { modalId, closeOnOutside, defaultOpened, ...childProps } = this.props;
+        const dataAttr = `data-expand${!closeOnOutside ? "-keep" : ""}`;
 
         return ReactDOM.createPortal(
-            this.context.isExpanded(this.props.modalId) && (
+            this.context.isExpanded(modalId) && (
                 <div
-                    {...this.props.wrapperProps}
-                    {...{ [dataAttr]: this.props.modalId }}
+                    {...childProps}
+                    // data-expand={modalId}
+                    style={this.overlayStyle}
+                    {...{ [dataAttr]: modalId }}
+                    {...(closeOnOutside ? { onClick: this.context.changeExpandState(modalId, false) } : {})}
                 >
                     {this.props.children}
                 </div>

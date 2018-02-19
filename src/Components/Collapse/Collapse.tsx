@@ -42,10 +42,10 @@ export class Collapse extends React.Component<CollapseProps> {
         );
     }
 
-    protected controlElement = (): void => {
+    protected controlElement = (): JSX.Element => (
         this.props.controlElement({
             state: this.context.isExpanded(this.props.collapseId),
             onClick: this.context.changeExpandState(this.props.collapseId)
-        });
-    }
+        })
+    )
 }
