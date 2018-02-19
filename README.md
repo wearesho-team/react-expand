@@ -29,6 +29,11 @@ Controlling expand state
     public render(): JSX.Element {
       return (
         <React.Fragment>
+        <button 
+          onClick={this.context.changeExpandState("custom-expand-string")}
+// Highly recommended use data attribute for elements outside controlled element
+          data-expand="custom-expand-string" 
+        />
 // In this case expand state changing on click button 
 // and click on zone without data attribute "custom-expand-string"
             <div
@@ -50,7 +55,8 @@ Controlling expand state
 
 Modal
 ```JavaScript
- <Modal defaultOpened closeOnOutside wrapperProps={...HTMLDivElementProps}>
+ <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
+ <Modal modalId="some-id" defaultOpened closeOnOutside wrapperProps={...HTMLDivElementProps}>
     ...
     <ModalCloseButton {...HTMLButtonElementProps}/>
  </Modal>
