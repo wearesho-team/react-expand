@@ -56,7 +56,7 @@ Controlling expand state
 Modal
 ```JavaScript
  <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
- <Modal modalId="some-id" defaultOpened closeOnOutside wrapperProps={...HTMLDivElementProps}>
+ <Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
     ...
     <ModalCloseButton {...HTMLButtonElementProps}/>
  </Modal>
