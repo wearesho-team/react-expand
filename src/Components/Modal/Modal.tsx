@@ -44,6 +44,8 @@ export class Modal extends React.Component<ModalProps> {
 
         if (!document.getElementById(Modal.containerName)) {
             document.body.appendChild(this.container);
+        } else {
+            this.container = document.getElementById(Modal.containerName) as HTMLDivElement;
         }
 
         this.setBodyClassName();
@@ -77,11 +79,11 @@ export class Modal extends React.Component<ModalProps> {
     }
 
     protected setBodyClassName = () => {
-        if (document.body.classList.contains("modal-open") && !this.context.isExpanded(this.props.modalId)) {
+        if (document.body.classList.contains("modal-open") && !this.container.childElementCount) {
             document.body.classList.remove("modal-open");
         }
 
-        if (!document.body.classList.contains("modal-open") && this.context.isExpanded(this.props.modalId)) {
+        if (!document.body.classList.contains("modal-open") && this.container.childElementCount) {
             document.body.classList.add("modal-open");
         }
     }
