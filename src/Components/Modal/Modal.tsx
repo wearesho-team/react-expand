@@ -65,7 +65,6 @@ export class Modal extends React.Component<ModalProps> {
             this.context.isExpanded(modalId) && (
                 <div
                     {...childProps}
-                    // data-expand={modalId}
                     style={this.overlayStyle}
                     {...{ [dataAttr]: modalId }}
                     {...(closeOnOutside ? { onClick: this.context.changeExpandState(modalId, false) } : {})}
