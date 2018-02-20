@@ -3,7 +3,7 @@
   "version": "1.1.1",
   "description": "Simple element expand state controlling",
   "main": "build/index.js",
-  "typings": "build/index.d.ts",
+  "typings": "build/src/index.d.ts",
   "scripts": {
     "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=tsconfig.json ./node_modules/.bin/nyc --reporter=html mocha -r jsdom-global/register -r ts-node/register -r source-map-support/register tests/unit/bootstrap.ts tests/**/*-specs.tsx tests/**/*-specs.ts",
     "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack",
