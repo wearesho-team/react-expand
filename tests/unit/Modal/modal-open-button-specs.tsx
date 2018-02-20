@@ -19,7 +19,7 @@ describe("<ModalOpenButton/>", () => {
 
     beforeEach(() => {
         wrapper = mount(
-            <ModalOpenButton modalId={id}/>,
+            <ModalOpenButton modalId={id} />,
             { context }
         );
     });
@@ -42,7 +42,7 @@ describe("<ModalOpenButton/>", () => {
         }
 
         wrapper = mount(
-            <ModalOpenButton modalId={id} onClick={handle}/>,
+            <ModalOpenButton modalId={id} onClick={handle} />,
             { context }
         );
 
