@@ -42,17 +42,18 @@ export class Modal extends React.Component<ModalProps> {
     public componentDidMount() {
         this.context.changeExpandState(this.props.modalId, !!this.props.defaultOpened)();
 
-        if (!document.getElementById(Modal.containerName)) {
+        const existContainer = document.getElementById(Modal.containerName) as HTMLDivElement;
+        if (!existContainer) {
             document.body.appendChild(this.container);
         } else {
-            this.container = document.getElementById(Modal.containerName) as HTMLDivElement;
+            this.container = existContainer;
         }
 
         this.setBodyClassName();
     }
 
     public componentWillUnmount() {
-        document.body.removeChild(this.container);
+        this.container && document.body.removeChild(this.container);
     }
 
     public componentDidUpdate() {

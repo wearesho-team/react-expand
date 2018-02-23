@@ -11,8 +11,12 @@ describe("<Modal/>", () => {
 
     let context: ExpandContext;
     const modalId = "modal-id";
+    const container = document.createElement("div");
+    container.id = Modal.containerName;
 
     beforeEach(() => {
+        document.body.appendChild(container);
+
         wrapper = mount(
             <ExpandController>
                 <Modal defaultOpened modalId={modalId}>
@@ -63,5 +67,13 @@ describe("<Modal/>", () => {
         expect(document.body.className).to.equal("modal-open");
         context.changeExpandState(modalId)();
         expect(document.body.className).to.equal("");
+    });
+
+    it("Should create modal container if it does not exist in DOM on mount", () => {
+        wrapper.unmount();
+        container.remove();
+        wrapper.mount();
+
+        expect(document.getElementById(Modal.containerName)).to.exist;
     });
 });
