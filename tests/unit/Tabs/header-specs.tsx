@@ -3,6 +3,7 @@ import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
 import { Header, TabsContext } from "../../../src/Components/Tabs";
+import { ExpandController, ExpandContext } from "../../../src";
 
 describe("<Header/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
@@ -12,10 +13,11 @@ describe("<Header/>", () => {
     const commonHandler = () => undefined;
 
     let activeTab;
-    const context: TabsContext = {
+    const context: TabsContext & ExpandContext = {
         changeActiveTab: (tabId) => activeTab = tabId,
         unregisterTab: commonHandler,
-        registerTab: commonHandler
+        registerTab: commonHandler,
+        ...(new ExpandController({})).getChildContext()
     };
 
     beforeEach(() => {

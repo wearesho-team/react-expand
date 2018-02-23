@@ -2,10 +2,16 @@ import * as PropTypes from "prop-types";
 
 export interface TabElementProps extends React.HTMLProps<HTMLDivElement> {
     tabId: string
+    activeClassName?: string;
 }
 
 export const TabElementPropTypes: {[P in keyof TabElementProps]: PropTypes.Validator<any>} = {
     tabId: PropTypes.string.isRequired,
+    activeClassName: PropTypes.string
+};
+
+export const TabElementDefaultProps: {[P in keyof TabElementProps]?: TabElementProps[P]} = {
+    activeClassName: "active"
 };
 
 export interface TabsContext {
