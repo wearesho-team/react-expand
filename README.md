@@ -1,4 +1,6 @@
 # React Expand
+[![codecov](https://codecov.io/gh/wearesho-team/react-expand/branch/master/graph/badge.svg)](https://codecov.io/gh/wearesho-team/react-expand)
+[![Build Status](https://travis-ci.org/wearesho-team/react-expand.svg?branch=master)](https://travis-ci.org/wearesho-team/react-expand)
 
 Component for controlling expand state of each elements on page.
 
