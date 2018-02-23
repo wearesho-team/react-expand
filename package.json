@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "typings": "build/src/index.d.ts",
   "scripts": {
-    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=tsconfig.json ./node_modules/.bin/nyc mocha -r ts-node/register -r source-map-support/register tests/**-specs.ts",
+    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT=tsconfig.json ./node_modules/.bin/nyc mocha -r jsdom-global/register -r ts-node/register -r source-map-support/register tests/unit/bootstrap.ts tests/**/*-specs.tsx tests/**/*-specs.ts",
     "build": "cross-env NODE_ENV=production ./node_modules/.bin/webpack",
     "coverage": "./node_modules/.bin/nyc report --reporter=text-lcov > coverage.lcov && codecov",
     "lint": "./node_modules/.bin/tslint --project .",
