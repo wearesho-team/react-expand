@@ -5,14 +5,18 @@ Component for controlling expand state of each elements on page.
 ## Usage
 
 Somewhere in code
-```JavaScript
+```jsx
+return (
   <ExpandController>
       <SomeComponent/>
   </ExpandController>
+);
 ```
 Controlling expand state
-```JavaScript
-class SomeComponent extends React.Component {
+```jsx
+import * as React from "react";
+
+export class SomeComponent extends React.Component {
     ...
     public static readonly contextTypes = ExpandControllerContextTypes;
     public readonly context: ExpandContext;
@@ -56,17 +60,19 @@ class SomeComponent extends React.Component {
 ```
 ### Pesets
 
-Modal
-```JavaScript
-<ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
-<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
-    ...
-    <ModalCloseButton {...HTMLButtonElementProps}/>
-</Modal>
+#### Modal
+```jsx
+return (
+  <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
+  <Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+      ...
+      <ModalCloseButton {...HTMLButtonElementProps}/>
+  </Modal>
+);
 ```
 
-Collapse
-```JavaScript
+#### Collapse
+```jsx
 <Collapse 
     controlElement={({state: boolean, onClick: () => void}) => <i className={state ? "open": "closed"} onClick={onClick}/>} 
     defaultOpened
@@ -76,8 +82,8 @@ Collapse
 </Collapse>
 ```
 
-Tabs
-```JavaScript
+#### Tabs
+```jsx
  <TabsController>
     <Header activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
       ...
