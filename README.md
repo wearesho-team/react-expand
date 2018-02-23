@@ -79,13 +79,13 @@ Collapse
 Tabs
 ```JavaScript
  <TabsController>
-    <Header tabId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
+    <Header activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
       ...
     </Header>
     <Header tabId="tab_2" {...HTMLDivElementProps} >
       ...
     </Header>
-    <Tab tabId="tab_1" {...HTMLDivElementProps} >
+    <Tab activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} >
       ...
     </Tab>
     <Tab tabId="tab_2" {...HTMLDivElementProps}>
