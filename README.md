@@ -8,11 +8,9 @@ Component for controlling expand state of each elements on page.
 
 Somewhere in code
 ```jsx
-return (
-  <ExpandController>
-      <SomeComponent/>
-  </ExpandController>
-);
+<ExpandController>
+    <SomeComponent/>
+</ExpandController>
 ```
 Controlling expand state
 ```jsx
@@ -64,15 +62,11 @@ export class SomeComponent extends React.Component {
 
 #### Modal
 ```jsx
-return (
-  <React.Fragment>
-    <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
-    <Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
-        ...
-        <ModalCloseButton {...HTMLButtonElementProps}/>
-    </Modal>
-  </React.Fragment>
-);
+<ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
+<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+    ...
+    <ModalCloseButton {...HTMLButtonElementProps}/>
+</Modal>
 ```
 
 #### Collapse
@@ -88,18 +82,18 @@ return (
 
 #### Tabs
 ```jsx
- <TabsController>
-    <Header activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
-      ...
-    </Header>
-    <Header tabId="tab_2" {...HTMLDivElementProps} >
-      ...
-    </Header>
-    <Tab activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} >
-      ...
-    </Tab>
-    <Tab tabId="tab_2" {...HTMLDivElementProps}>
-      ...
-    </Tab>
- </TabsController>
+<TabsController>
+   <Header activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
+     ...
+   </Header>
+   <Header tabId="tab_2" {...HTMLDivElementProps} >
+     ...
+   </Header>
+   <Tab activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} >
+     ...
+   </Tab>
+   <Tab tabId="tab_2" {...HTMLDivElementProps}>
+     ...
+   </Tab>
+</TabsController>
 ```
