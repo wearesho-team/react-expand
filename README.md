@@ -65,11 +65,13 @@ export class SomeComponent extends React.Component {
 #### Modal
 ```jsx
 return (
-  <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
-  <Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
-      ...
-      <ModalCloseButton {...HTMLButtonElementProps}/>
-  </Modal>
+  <React.Fragment>
+    <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
+    <Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+        ...
+        <ModalCloseButton {...HTMLButtonElementProps}/>
+    </Modal>
+  </React.Fragment>
 );
 ```
 
