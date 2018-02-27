@@ -60,7 +60,7 @@ export class SomeComponent extends React.Component {
     }
 }
 ```
-### Pesets
+### Presets
 
 #### Modal
 ```jsx
