@@ -49,9 +49,10 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
         (key: string, open?: boolean, state: any = undefined) => (): void => {
             if (open === undefined) {
                 open = !this.isExpanded(key);
+            } else if (this.isExpanded(key) !== open) {
+                this.state.expanded[key] = open;
             }
 
-            this.state.expanded[key] = open;
             this.state.state[key] = state;
 
             this.forceUpdate();
