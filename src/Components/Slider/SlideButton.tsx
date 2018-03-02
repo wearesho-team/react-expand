@@ -1,13 +1,13 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { SliderControllerContextTypes, SliderControllerContext, Direction } from "./SliderProps";
+import { SliderControllerContextTypes, SliderControllerContext, Direction } from "./SliderController";
 
 export interface SlideButtonProps extends React.HTMLProps<HTMLButtonElement> {
     direction: Direction
 }
 
-export const SlideButtonPropTypes: {[P in keyof SlideButtonProps]} = {
+export const SlideButtonPropTypes: {[P in keyof SlideButtonProps]: PropTypes.Validator<any>} = {
     direction: PropTypes.string.isRequired
 };
 
