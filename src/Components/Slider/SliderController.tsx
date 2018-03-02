@@ -73,7 +73,7 @@ export class SliderController extends React.Component<SliderControllerProps> {
         activeSlide: -1
     };
 
-    private timer: any;
+    protected timer: any;
 
     public getChildContext(): SliderControllerContext {
         return {
@@ -95,7 +95,9 @@ export class SliderController extends React.Component<SliderControllerProps> {
     }
 
     public componentDidMount() {
-        this.isNoActiveSlide && this.changeActiveSlide(this.slidesArray[0]);
+        if (this.isNoActiveSlide && this.state.slides.size) {
+            this.changeActiveSlide(this.slidesArray[0]);
+        }
 
         if (this.props.autoPlay) {
             this.timer = setInterval(this.autoPlay, this.props.autoPlayDelay);
@@ -103,7 +105,9 @@ export class SliderController extends React.Component<SliderControllerProps> {
     }
 
     public componentDidUpdate() {
-        this.isNoActiveSlide && this.changeActiveSlide(this.slidesArray[0]);
+        if (this.isNoActiveSlide && this.state.slides.size) {
+            this.changeActiveSlide(this.slidesArray[0]);
+        }
     }
 
     public componentWillUnmount() {
@@ -124,7 +128,9 @@ export class SliderController extends React.Component<SliderControllerProps> {
 
     protected unregisterSlide = (id: string): void => {
         this.state.slides.delete(id);
-        this.forceUpdate();
+        this.setState({
+            activeSlide: -1
+        });
     }
 
     protected changeActiveSlide = (id: string): void => {

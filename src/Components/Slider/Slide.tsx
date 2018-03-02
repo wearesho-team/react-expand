@@ -30,9 +30,8 @@ export class Slide extends React.Component<SlideProps> {
 
     public readonly context: SliderControllerContext & ExpandContext;
 
-    protected id: string;
-
     protected prevTouchPosition: number;
+    protected id: string;
 
     public componentWillMount() {
         this.id = this.context.registerSlide();
