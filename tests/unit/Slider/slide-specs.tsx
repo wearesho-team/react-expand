@@ -46,6 +46,9 @@ describe("<Slide>", () => {
             </Slide>,
             { context }
         );
+
+        // update expanded state
+        wrapper.instance().forceUpdate();
     });
 
     afterEach(() => {

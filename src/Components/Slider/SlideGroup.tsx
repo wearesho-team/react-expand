@@ -21,18 +21,16 @@ export class SlideGroup extends React.Component<SlideGroupProps> {
     public render(): React.ReactNode {
         const { initialGroup, groupSize, disableDrag } = this.props;
 
-        return [].concat(
-            React.Children.map(this.props.children, (child: React.ReactElement<any>, i) => i % groupSize
-                ? null
-                : (
-                    <Slide
-                        initial={initialGroup && Math.round(i / groupSize) === (initialGroup - 1)}
-                        disableDrag={disableDrag}
-                        key={i}
-                    >
-                        {React.Children.toArray(this.props.children).slice(i, i + groupSize)}
-                    </Slide>
-                )
+        return React.Children.map(this.props.children, (child: React.ReactElement<any>, i) => i % groupSize
+            ? null
+            : (
+                <Slide
+                    initial={initialGroup && Math.round(i / groupSize) === (initialGroup - 1)}
+                    disableDrag={disableDrag}
+                    key={i}
+                >
+                    {React.Children.toArray(this.props.children).slice(i, i + groupSize)}
+                </Slide>
             )
         );
     }

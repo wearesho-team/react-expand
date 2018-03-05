@@ -33,7 +33,7 @@ export class Slide extends React.Component<SlideProps> {
     protected prevTouchPosition: number;
     protected id: string;
 
-    public componentWillMount() {
+    public componentDidMount() {
         this.id = this.context.registerSlide();
 
         this.props.initial && this.context.setAsActive(this.id);

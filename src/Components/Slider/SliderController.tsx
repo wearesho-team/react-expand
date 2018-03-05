@@ -119,7 +119,7 @@ export class SliderController extends React.Component<SliderControllerProps> {
     }
 
     protected registerSlide = (): string => {
-        const id = `slide-${this.state.slides.size}-${Date.now().toString()}`;
+        const id = `slide-${this.state.slides.size}`;
         this.state.slides.add(id);
         this.forceUpdate();
 
