@@ -82,12 +82,10 @@ describe("<Slide>", () => {
     });
 
     it("Should ignore drag when `disableDrag` prop passed", () => {
-        wrapper = mount(
-            <Slide disableDrag>
-                <span>test</span>
-            </Slide>,
-            { context }
-        );
+        wrapper.setProps({
+            disableDrag: true
+        });
+        wrapper.update();
 
         wrapper.simulate("mouseDown", {
             clientX: SlideDefaultProps.dragSensitive * 2

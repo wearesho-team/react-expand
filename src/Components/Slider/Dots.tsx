@@ -48,7 +48,8 @@ export class Dots extends React.Component<DotsProps> {
     }
 
     protected getClassName = (id: string): string => {
-        return `${this.props.className || ""}${this.context.isExpanded(id) ? ` ${this.props.activeClassName}` : ""}`
+        const { className, activeClassName } = this.props;
+        return `${className || ""}${this.context.isExpanded(id) ? ` ${activeClassName}` : ""}`.trim();
     }
 
     protected handleClick = (id: string) => (event: React.MouseEvent<HTMLButtonElement>): void => {
