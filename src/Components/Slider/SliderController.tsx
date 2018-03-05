@@ -67,6 +67,8 @@ export class SliderController extends React.Component<SliderControllerProps> {
     public static readonly propTypes = SliderControllerPropTypes;
     public static readonly contextTypes = ExpandContextTypes;
 
+    public static slidesCount = 0;
+
     public readonly context: ExpandContext;
     public readonly state: SliderControllerState = {
         slides: new Set(),
@@ -119,9 +121,10 @@ export class SliderController extends React.Component<SliderControllerProps> {
     }
 
     protected registerSlide = (): string => {
-        const id = `slide-${this.state.slides.size}`;
+        const id = `slide-${this.state.slides.size}-${SliderController.slidesCount}`;
         this.state.slides.add(id);
         this.forceUpdate();
+        SliderController.slidesCount++;
 
         return id;
     }
@@ -134,9 +137,9 @@ export class SliderController extends React.Component<SliderControllerProps> {
     }
 
     protected changeActiveSlide = (id: string): void => {
+        this.context.changeExpandState(id, true)();
         this.state.slides.forEach((slideId) => slideId !== id && this.context.changeExpandState(slideId, false)());
 
-        this.context.changeExpandState(id, true)();
         this.setState({
             activeSlide: this.getSlideIndex(id)
         });
