@@ -34,9 +34,7 @@ export class TabsController extends React.Component<{}, TabsControllerState> {
     }
 
     protected changeActiveTab = (id: string): void => {
-        this.state.tabs.forEach((tabId) => (
-            this.context.isExpanded(tabId) && this.context.changeExpandState(tabId, false)()
-        ));
+        this.state.tabs.forEach((tabId) => tabId !== id && this.context.changeExpandState(tabId, false)());
 
         this.context.changeExpandState(id, true)();
     };

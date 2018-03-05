@@ -97,3 +97,41 @@ export class SomeComponent extends React.Component {
    </Tab>
 </TabsController>
 ```
+
+### Slider
+```jsx
+<SliderController autoPlay autoPlayDelay={5000}>
+    <Slide disableDrag {...HTMLDivElementProps}>
+        ...
+    </Slide>
+    // Slide that will be displayed on mount
+    <Slide initial {...HTMLDivElementProps}>
+        ...
+    </Slide>
+    <Slide dragSensitive={500} {...HTMLDivElementProps}>
+        ...
+    </Slide>
+    <Dots {...HTMLButtonElementProps}/>
+</SliderController>
+<SliderController>
+    <SlideButton drection={Direction.prev} {...HTMLButtonElementProps}>
+        ...
+    </SlideButton>
+    // will render [[some banner 1, some banner 2, some banner 3], [some banner 4, some banner 5, some banner 6], [some banner 7]]
+    <SlideGroup groupSize={3}>
+        <span>some banner 1</span>
+        <span>some banner 2</span>
+        <span>some banner 3</span>
+        <span>some banner 4</span>
+        <span>some banner 5</span>
+        <span>some banner 6</span>
+        <span>some banner 7</span>
+    </SlideGroup>
+    <SlideButton drection={Direction.next} {...HTMLButtonElementProps}>
+        ...
+    </SlideButton>
+    <Dots activeClassName="active" {...HTMLButtonElementProps}>
+        ...
+    </Dots>
+</SliderController>
+```

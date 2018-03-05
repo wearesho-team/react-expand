@@ -51,7 +51,10 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
                 open = !this.isExpanded(key);
             }
 
-            this.state.expanded[key] = open;
+            if (this.isExpanded(key) !== open) {
+                this.state.expanded[key] = open;
+            }
+
             this.state.state[key] = state;
 
             this.forceUpdate();
@@ -70,8 +73,7 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
         const shouldBeDisabled = new Set(Object.keys(this.state.expanded));
 
         const filter = (node: HTMLElement): boolean => {
-            const attr = node.getAttribute("data-expand");
-            !!attr && shouldBeDisabled.delete(attr);
+            shouldBeDisabled.delete(node.getAttribute("data-expand"));
             return (node.parentElement instanceof HTMLElement) && filter(node.parentElement);
         };
         target instanceof HTMLElement && filter(target);
