@@ -26,9 +26,10 @@ export class Dots extends React.Component<DotsProps> {
 
     public readonly context: SliderControllerContext & ExpandContext;
 
-    public render(): JSX.Element {
+    public render(): React.ReactNode {
         const { activeClassName, ...childProps } = this.props;
-        const list = this.context.slidesList.map((id) => (
+
+        return this.context.slidesList.map((id) => (
             <button
                 type="button"
                 {...childProps}
@@ -39,12 +40,6 @@ export class Dots extends React.Component<DotsProps> {
                 {this.props.children}
             </button>
         ));
-
-        return (
-            <React.Fragment>
-                {list}
-            </React.Fragment>
-        );
     }
 
     protected getClassName = (id: string): string => {
