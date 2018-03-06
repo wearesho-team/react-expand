@@ -6,7 +6,7 @@ import { ExpandContext, ExpandController } from "../../../src/Components/ExpandC
 
 import { Popup } from "../../../src/Components/Popup";
 
-describe("<Modal/>", () => {
+describe("<Popup/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
 
     let context: ExpandContext;

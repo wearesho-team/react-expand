@@ -5,7 +5,7 @@ import { ReactWrapper, mount } from "enzyme";
 import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
 import { ExpandControl, TriggerEvents } from "../../../src/Components/ExpandControl";
 
-describe("<Modal/>", () => {
+describe("<ExpandControl/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
 
     let context: ExpandContext;
