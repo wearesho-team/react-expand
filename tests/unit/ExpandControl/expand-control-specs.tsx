@@ -3,28 +3,27 @@ import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
 import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
-
-import {PopupControl, TriggerEvents} from "../../../src/Components/Popup";
+import { ExpandControl, TriggerEvents } from "../../../src/Components/ExpandControl";
 
 describe("<Modal/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
 
     let context: ExpandContext;
-    const popupId = "popup-id";
+    const expandId = "expand-id";
 
     beforeEach(() => {
         wrapper = mount(
             <ExpandController>
-                <PopupControl
-                    popupId={popupId}
+                <ExpandControl
+                    expandId={expandId}
                     triggerEvent={TriggerEvents.hover}
                 >
                     <div/>
-                </PopupControl>
+                </ExpandControl>
             </ExpandController>
         );
 
-        context = wrapper.find(PopupControl).instance().context;
+        context = wrapper.find(ExpandControl).instance().context;
     });
 
     afterEach(() => {
@@ -32,11 +31,11 @@ describe("<Modal/>", () => {
     });
 
     it("Should change context only on mouse over when trigger event is `hover`", () => {
-        expect(context.isExpanded(popupId)).to.be.false;
+        expect(context.isExpanded(expandId)).to.be.false;
         wrapper.simulate("click");
-        expect(context.isExpanded(popupId)).to.be.false;
+        expect(context.isExpanded(expandId)).to.be.false;
         wrapper.simulate("mouseover");
-        expect(context.isExpanded(popupId)).to.be.true;
+        expect(context.isExpanded(expandId)).to.be.true;
     });
 
     it("Should change context only on click when trigger event is `click`", () => {
@@ -44,20 +43,17 @@ describe("<Modal/>", () => {
 
         wrapper = mount(
             <ExpandController>
-                <PopupControl
-                    popupId={popupId}
-                    triggerEvent={TriggerEvents.click}
-                >
+                <ExpandControl expandId={expandId}>
                     <div/>
-                </PopupControl>
+                </ExpandControl>
             </ExpandController>
         );
-        context = wrapper.find(PopupControl).instance().context;
+        context = wrapper.find(ExpandControl).instance().context;
 
-        expect(context.isExpanded(popupId)).to.be.false;
+        expect(context.isExpanded(expandId)).to.be.false;
         wrapper.simulate("mouseover");
-        expect(context.isExpanded(popupId)).to.be.false;
+        expect(context.isExpanded(expandId)).to.be.false;
         wrapper.simulate("click");
-        expect(context.isExpanded(popupId)).to.be.true;
+        expect(context.isExpanded(expandId)).to.be.true;
     });
 });
