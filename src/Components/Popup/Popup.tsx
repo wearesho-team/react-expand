@@ -1,4 +1,6 @@
 import * as React from "react";
+import * as PropTypes from "prop-types";
+
 import { ExpandContext, ExpandContextTypes } from "../ExpandController";
 import { PopupProps, PopupPropTypes } from "./PopupProps";
 
