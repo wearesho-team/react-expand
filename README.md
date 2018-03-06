@@ -98,7 +98,7 @@ export class SomeComponent extends React.Component {
 </TabsController>
 ```
 
-### Slider
+#### Slider
 ```jsx
 <SliderController autoPlay autoPlayDelay={5000}>
     <Slide disableDrag {...HTMLDivElementProps}>
@@ -127,11 +127,22 @@ export class SomeComponent extends React.Component {
         <span>some banner 6</span>
         <span>some banner 7</span>
     </SlideGroup>
-    <SlideButton drection={Direction.next} {...HTMLButtonElementProps}>
+    <SlideButton direction={Direction.next} {...HTMLButtonElementProps}>
         ...
     </SlideButton>
     <Dots activeClassName="active" {...HTMLButtonElementProps}>
         ...
     </Dots>
 </SliderController>
+```
+
+#### Popup
+```jsx
+<PopupControl popupId="popup-id" triggerEvent={TriggerEvents.hover}>
+    // Single component
+    ...
+</PopupControl>
+<Popup popupId="popup-id" {...HTMLDivElementProps}>
+    ...
+</Popup>
 ```
