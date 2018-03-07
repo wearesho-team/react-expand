@@ -128,7 +128,7 @@ export class SomeComponent extends React.Component {
     <Dots {...HTMLButtonElementProps}/>
 </SliderController>
 <SliderController>
-    <SlideButton drection={Direction.prev} {...HTMLButtonElementProps}>
+    <SlideButton direction={Direction.prev} {...HTMLButtonElementProps}>
         ...
     </SlideButton>
     // will render [[some banner 1, some banner 2, some banner 3], [some banner 4, some banner 5, some banner 6], [some banner 7]]
