@@ -62,7 +62,13 @@ export class SomeComponent extends React.Component {
 
 #### Expand control
 ```jsx
-<ExpandControl expandId="some-id" triggerEvent={TriggerEvents.click}>
+<ExpandControl
+    expandId="some-id"
+    // Event for triggering state change (value from exist enum list)
+    triggerEvent={TriggerEvents.click}
+    // New state indicator. Default value is `true`.
+    state={true}
+>
     // Any element
     <span>Change expand state to true on trigger event</span>
 </ExpandControl>

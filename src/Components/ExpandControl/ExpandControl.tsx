@@ -18,7 +18,7 @@ export class ExpandControl extends React.Component<ExpandControlProps> {
 
     public render() {
         return React.cloneElement(this.props.children as React.ReactElement<any>, {
-            [this.props.triggerEvent]: this.context.changeExpandState(this.props.expandId, true),
+            [this.props.triggerEvent]: this.context.changeExpandState(this.props.expandId, this.props.state),
         });
     }
 }
