@@ -20,7 +20,7 @@ export class Popup extends React.Component<PopupProps> {
         }
 
         Object.assign(childProps, {
-            [triggerEvent]: this.context.changeExpandState(this.props.popupId, false)
+            [triggerEvent]: this.context.changeExpandState(popupId, false)
         });
 
         return (
