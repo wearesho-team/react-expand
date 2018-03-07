@@ -3,6 +3,8 @@ import * as PropTypes from "prop-types";
 export enum TriggerEvents {
     hover = "onMouseOver",
     click = "onClick",
+    out = "onMouseOut",
+    leave = "onMouseLeave",
 }
 
 export interface ExpandControlProps {

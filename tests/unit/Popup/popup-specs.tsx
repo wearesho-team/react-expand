@@ -5,6 +5,7 @@ import { ReactWrapper, mount } from "enzyme";
 import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
 
 import { Popup } from "../../../src/Components/Popup";
+import {TriggerEvents} from "../../../src/Components/ExpandControl";
 
 describe("<Popup/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
@@ -37,7 +38,23 @@ describe("<Popup/>", () => {
         expect(wrapper.getDOMNode()).not.to.be.null;
     });
 
-    it("Should close popup on mouse over event", () => {
+    it("Should close popup on mouse leave event", () => {
+        context.changeExpandState(popupId, true)();
+        expect(context.isExpanded(popupId)).to.be.true;
+        wrapper.simulate("mouseleave");
+        expect(context.isExpanded(popupId)).to.be.false;
+    });
+
+    it("Should close popup on mouse out event", () => {
+        wrapper.unmount();
+        wrapper = mount(
+            <ExpandController>
+                <Popup popupId={popupId} triggerEvent={TriggerEvents.out}/>
+            </ExpandController>
+        );
+
+        context = wrapper.find(Popup).instance().context;
+
         context.changeExpandState(popupId, true)();
         expect(context.isExpanded(popupId)).to.be.true;
         wrapper.simulate("mouseout");

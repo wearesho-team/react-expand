@@ -60,6 +60,14 @@ export class SomeComponent extends React.Component {
 ```
 ### Presets
 
+#### Expand control
+```jsx
+<ExpandControl expandId="some-id" triggerEvent={TriggerEvents.click}>
+    // Any element
+    <span>Change expand state to true on trigger event</span>
+</ExpandControl>
+```
+
 #### Modal
 ```jsx
 <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
@@ -138,10 +146,9 @@ export class SomeComponent extends React.Component {
 
 #### Popup
 ```jsx
-<PopupControl popupId="popup-id" triggerEvent={TriggerEvents.hover}>
-    // Single component
+<ExpandControl expandId="popup-id" triggerEvent={TriggerEvents.hover}>
     ...
-</PopupControl>
+</ExpandControl>
 <Popup popupId="popup-id" {...HTMLDivElementProps}>
     ...
 </Popup>
