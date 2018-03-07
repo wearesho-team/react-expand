@@ -3,6 +3,7 @@ import * as PropTypes from "prop-types";
 
 import { ExpandContext, ExpandContextTypes } from "../ExpandController";
 import {
+    TriggerEvents,
     ExpandControlDefaultProps,
     ExpandControlProps,
     ExpandControlPropTypes
