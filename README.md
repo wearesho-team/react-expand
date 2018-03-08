@@ -78,7 +78,14 @@ export class SomeComponent extends React.Component {
 #### Modal
 ```jsx
 <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
-<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+<Modal
+    modalId="some-id"
+    defaultOpened
+    closeOnOutside
+    {...HTMLDivElementProps}
+    // Class name that will be added to body on modal opened. Default "modal-open"
+    activeBodyClassName="modal-open"
+>
     ...
     <ModalCloseButton {...HTMLButtonElementProps}/>
 </Modal>
