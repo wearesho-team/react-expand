@@ -21,5 +21,4 @@ export const ExpandControlPropTypes: {[T in keyof ExpandControlProps]: PropTypes
 
 export const ExpandControlDefaultProps: {[T in keyof ExpandControlProps]?: ExpandControlProps[T]} = {
     triggerEvent: TriggerEvents.click,
-    state: true,
 };

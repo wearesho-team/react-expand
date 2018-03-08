@@ -66,7 +66,8 @@ export class SomeComponent extends React.Component {
     expandId="some-id"
     // Event for triggering state change (value from exist enum list)
     triggerEvent={TriggerEvents.click}
-    // New state indicator. Default value is `true`.
+    // If set, expand state will change to passed value on trigger event.
+    // If not set, expand state will change to a value opposite to the current state.
     state={true}
 >
     // Any element
