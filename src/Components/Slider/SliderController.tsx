@@ -89,7 +89,7 @@ export class SliderController extends React.Component<SliderControllerProps> {
                     setAsActive: this.setAsActiveNext
                 },
                 [Direction.prev]: {
-                    disabled: this.state.activeSlide < 0 || this.state.activeSlide === 0,
+                    disabled: this.state.activeSlide <= 0,
                     setAsActive: this.setAsActivPrev
                 }
             },

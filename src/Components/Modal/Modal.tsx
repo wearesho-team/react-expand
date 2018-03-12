@@ -61,7 +61,7 @@ export class Modal extends React.Component<ModalProps> {
     }
 
     public render(): JSX.Element {
-        const { modalId, closeOnOutside, defaultOpened, ...childProps } = this.props;
+        const { modalId, closeOnOutside, defaultOpened, actionBodyClassName, ...childProps } = this.props;
         const dataAttr = `data-expand${!closeOnOutside ? "-keep" : ""}`;
 
         return ReactDOM.createPortal(
@@ -80,12 +80,14 @@ export class Modal extends React.Component<ModalProps> {
     }
 
     protected setBodyClassName = () => {
-        if (document.body.classList.contains("modal-open") && !this.container.childElementCount) {
-            document.body.classList.remove("modal-open");
+        const { actionBodyClassName } = this.props;
+
+        if (document.body.classList.contains(actionBodyClassName) && !this.container.childElementCount) {
+            document.body.classList.remove(actionBodyClassName);
         }
 
-        if (!document.body.classList.contains("modal-open") && this.container.childElementCount) {
-            document.body.classList.add("modal-open");
+        if (!document.body.classList.contains(actionBodyClassName) && this.container.childElementCount) {
+            document.body.classList.add(actionBodyClassName);
         }
     }
 }

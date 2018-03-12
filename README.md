@@ -60,10 +60,32 @@ export class SomeComponent extends React.Component {
 ```
 ### Presets
 
+#### Expand control
+```jsx
+<ExpandControl
+    expandId="some-id"
+    // Event for triggering state change (value from exist enum list)
+    triggerEvent={TriggerEvents.click}
+    // If set, expand state will change to passed value on trigger event.
+    // If not set, expand state will change to a value opposite to the current state.
+    state={true}
+>
+    // Any element
+    <span>Change expand state to true on trigger event</span>
+</ExpandControl>
+```
+
 #### Modal
 ```jsx
 <ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
-<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+<Modal
+    modalId="some-id"
+    defaultOpened
+    closeOnOutside
+    {...HTMLDivElementProps}
+    // Class name that will be added to body on modal opened. Default "modal-open"
+    activeBodyClassName="modal-open"
+>
     ...
     <ModalCloseButton {...HTMLButtonElementProps}/>
 </Modal>
@@ -114,7 +136,7 @@ export class SomeComponent extends React.Component {
     <Dots {...HTMLButtonElementProps}/>
 </SliderController>
 <SliderController>
-    <SlideButton drection={Direction.prev} {...HTMLButtonElementProps}>
+    <SlideButton direction={Direction.prev} {...HTMLButtonElementProps}>
         ...
     </SlideButton>
     // will render [[some banner 1, some banner 2, some banner 3], [some banner 4, some banner 5, some banner 6], [some banner 7]]
@@ -138,10 +160,9 @@ export class SomeComponent extends React.Component {
 
 #### Popup
 ```jsx
-<PopupControl popupId="popup-id" triggerEvent={TriggerEvents.hover}>
-    // Single component
+<ExpandControl expandId="popup-id" triggerEvent={TriggerEvents.hover}>
     ...
-</PopupControl>
+</ExpandControl>
 <Popup popupId="popup-id" {...HTMLDivElementProps}>
     ...
 </Popup>

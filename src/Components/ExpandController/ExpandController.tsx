@@ -79,10 +79,7 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
         target instanceof HTMLElement && filter(target);
 
         Array.from(document.querySelectorAll("[data-expand-keep]"))
-            .map((node) => {
-                const attr = node.getAttribute("data-expand-keep");
-                !!attr && shouldBeDisabled.delete(attr);
-            });
+            .forEach((node) => shouldBeDisabled.delete(node.getAttribute("data-expand-keep")));
 
         shouldBeDisabled.forEach((key: string) => this.state.expanded[key] = false);
 

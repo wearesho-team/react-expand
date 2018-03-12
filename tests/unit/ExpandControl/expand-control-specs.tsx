@@ -30,6 +30,37 @@ describe("<ExpandControl/>", () => {
         wrapper.unmount();
     });
 
+    it("Should change state alternately without prop `state`", () => {
+        expect(context.isExpanded(expandId)).to.be.false;
+        wrapper.simulate("mouseover");
+        expect(context.isExpanded(expandId)).to.be.true;
+        wrapper.simulate("mouseover");
+        expect(context.isExpanded(expandId)).to.be.false;
+    });
+
+    it("Should change expand state only to true when prop `state` is passed", () => {
+        wrapper.unmount();
+        wrapper = mount(
+            <ExpandController>
+                <ExpandControl
+                    expandId={expandId}
+                    triggerEvent={TriggerEvents.hover}
+                    state={true}
+                >
+                    <div/>
+                </ExpandControl>
+            </ExpandController>
+        );
+
+        context = wrapper.find(ExpandControl).instance().context;
+        expect(context.isExpanded(expandId)).to.be.false;
+
+        wrapper.simulate("mouseover");
+        expect(context.isExpanded(expandId)).to.be.true;
+        wrapper.simulate("mouseover");
+        expect(context.isExpanded(expandId)).to.be.true;
+    });
+
     it("Should change context only on mouse over when trigger event is `hover`", () => {
         expect(context.isExpanded(expandId)).to.be.false;
         wrapper.simulate("click");
@@ -55,5 +86,51 @@ describe("<ExpandControl/>", () => {
         expect(context.isExpanded(expandId)).to.be.false;
         wrapper.simulate("click");
         expect(context.isExpanded(expandId)).to.be.true;
+    });
+
+    it("Should change context from true to false on click event", () => {
+        wrapper.unmount();
+
+        wrapper = mount(
+            <ExpandController>
+                <ExpandControl expandId={expandId} state={false}>
+                    <div/>
+                </ExpandControl>
+            </ExpandController>
+        );
+        context = wrapper.find(ExpandControl).instance().context;
+
+        context.changeExpandState(expandId, true)();
+        expect(context.isExpanded(expandId)).to.be.true;
+
+        wrapper.simulate("mouseover");
+        expect(context.isExpanded(expandId)).to.be.true;
+        wrapper.simulate("click");
+        expect(context.isExpanded(expandId)).to.be.false;
+    });
+
+    it("Should change context from true to false on hover event", () => {
+        wrapper.unmount();
+
+        wrapper = mount(
+            <ExpandController>
+                <ExpandControl
+                    expandId={expandId}
+                    state={false}
+                    triggerEvent={TriggerEvents.hover}
+                >
+                    <div/>
+                </ExpandControl>
+            </ExpandController>
+        );
+        context = wrapper.find(ExpandControl).instance().context;
+
+        context.changeExpandState(expandId, true)();
+        expect(context.isExpanded(expandId)).to.be.true;
+
+        wrapper.simulate("click");
+        expect(context.isExpanded(expandId)).to.be.true;
+        wrapper.simulate("mouseover");
+        expect(context.isExpanded(expandId)).to.be.false;
     });
 });
