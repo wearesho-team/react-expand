@@ -1,7 +1,8 @@
 import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { ExpandContextTypes, ExpandContext } from "../ExpandController";
-import { TabsContext, TabsContextTypes } from "./TabsProps";
+import { TabsContext, TabsContextTypes } from "./TabsControllerContext";
 
 export interface TabsControllerState {
     tabs: Set<string>;

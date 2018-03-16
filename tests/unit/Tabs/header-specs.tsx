@@ -2,57 +2,28 @@ import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
-import { Header, TabsContext } from "../../../src/Components/Tabs";
-import { ExpandController, ExpandContext } from "../../../src";
+import { Header, TabsController } from "../../../src/Components/Tabs";
+import { ExpandController, ExpandControlDefaultProps } from "../../../src";
 
 describe("<Header/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
-
     const id = "header";
 
-    const commonHandler = () => undefined;
-
-    let activeTab;
-    const context: TabsContext & ExpandContext = {
-        changeActiveTab: (tabId) => activeTab = tabId,
-        unregisterTab: commonHandler,
-        registerTab: commonHandler,
-        ...(new ExpandController({})).getChildContext()
-    };
-
     beforeEach(() => {
-        commonHandler();
         wrapper = mount(
-            <Header tabId={id} />,
-            { context }
+            <ExpandController>
+                <TabsController>
+                    <Header expandId={id} />
+                </TabsController>
+            </ExpandController>
         );
     });
 
-    afterEach(() => {
-        wrapper.unmount();
-        activeTab = undefined;
-    });
+    afterEach(() => wrapper.unmount());
 
     it("Should change active tab on click", () => {
-        wrapper.simulate("click");
+        wrapper.find(Header).simulate("click");
 
-        expect(activeTab).to.equal(id);
-    });
-
-    it("Should not change active tab on click when default prevented", () => {
-        wrapper.unmount();
-
-        const handle = (e) => {
-            e.preventDefault();
-        }
-
-        wrapper = mount(
-            <Header tabId={id} onClick={handle}/>,
-            { context }
-        );
-
-        wrapper.simulate("click");
-
-        expect(activeTab).to.be.undefined;
+        expect(wrapper.find(`.${ExpandControlDefaultProps.activeClassName}`)).to.have.length(1);
     });
 });

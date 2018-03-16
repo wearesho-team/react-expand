@@ -3,10 +3,9 @@ import * as ReactDOM from "react-dom";
 import * as PropTypes from "prop-types";
 
 import { ExpandContextTypes, ExpandContext } from "../ExpandController";
-import { ModalProps, ModalPropTypes, ModalContext, ModalContextTypes, ModalDefaultProps } from "./ModalProps";
+import { ModalPropTypes, ModalProps, ModalDefaultProps } from "./ModalProps";
 
 export class Modal extends React.Component<ModalProps> {
-    public static readonly childContextTypes = ModalContextTypes;
     public static readonly contextTypes = ExpandContextTypes;
     public static readonly defaultProps = ModalDefaultProps;
     public static readonly propTypes = ModalPropTypes;
@@ -33,12 +32,6 @@ export class Modal extends React.Component<ModalProps> {
         this.container.id = Modal.containerName;
     }
 
-    public getChildContext(): ModalContext {
-        return {
-            onClose: this.context.changeExpandState(this.props.modalId)
-        };
-    }
-
     public componentDidMount() {
         this.context.changeExpandState(this.props.modalId, !!this.props.defaultOpened)();
 
@@ -61,7 +54,7 @@ export class Modal extends React.Component<ModalProps> {
     }
 
     public render(): JSX.Element {
-        const { modalId, closeOnOutside, defaultOpened, ...childProps } = this.props;
+        const { activeBodyClassName, modalId, closeOnOutside, defaultOpened, ...childProps } = this.props;
         const dataAttr = `data-expand${!closeOnOutside ? "-keep" : ""}`;
 
         return ReactDOM.createPortal(
@@ -80,12 +73,12 @@ export class Modal extends React.Component<ModalProps> {
     }
 
     protected setBodyClassName = () => {
-        if (document.body.classList.contains("modal-open") && !this.container.childElementCount) {
-            document.body.classList.remove("modal-open");
+        if (document.body.classList.contains(this.props.activeBodyClassName) && !this.container.childElementCount) {
+            document.body.classList.remove(this.props.activeBodyClassName);
         }
 
-        if (!document.body.classList.contains("modal-open") && this.container.childElementCount) {
-            document.body.classList.add("modal-open");
+        if (!document.body.classList.contains(this.props.activeBodyClassName) && this.container.childElementCount) {
+            document.body.classList.add(this.props.activeBodyClassName);
         }
     }
 }

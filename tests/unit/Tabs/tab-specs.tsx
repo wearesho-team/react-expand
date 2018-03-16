@@ -2,44 +2,31 @@ import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
-import { Tab, TabsContext } from "../../../src/Components/Tabs";
-import { ExpandController, ExpandContext } from "../../../src";
+import { Tab, TabsController } from "../../../src/Components/Tabs";
+import { ExpandController } from "../../../src";
 
 describe("<Tab/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
-
     const id = "tab";
 
-    const commonHandler = () => undefined;
-
-    let registeredId;
-    const context: TabsContext & ExpandContext = {
-        changeActiveTab: commonHandler,
-        unregisterTab: (tabId) => registeredId = tabId,
-        registerTab: (tabId) => registeredId = tabId,
-        ...(new ExpandController({})).getChildContext()
-    }
-
     beforeEach(() => {
-        commonHandler();
         wrapper = mount(
-            <Tab tabId={id} />,
-            { context }
+            <ExpandController>
+                <TabsController>
+                    <Tab expandId={id} />
+                </TabsController>
+            </ExpandController>
         );
     });
 
-    afterEach(() => {
-        wrapper.unmount();
-        registeredId = undefined;
+    afterEach(() => wrapper.unmount());
+
+    it("Should register tab on mount", () => {
+        expect(wrapper.find(TabsController).instance().state.tabs.has(id)).to.be.true;
     });
 
-    it("Should trigger context prop `registerTab` on mount", () => {
-        expect(registeredId).to.equal(id);
-    });
-
-    it("Should trigger context prop `unregisterTab` on unmount", () => {
-        registeredId = undefined;
-        wrapper.unmount();
-        expect(registeredId).to.equal(id);
+    it("Should unregister tab on unmount", () => {
+        wrapper.find(Tab).instance().componentWillUnmount();
+        expect(wrapper.find(TabsController).instance().state.tabs.has(id)).to.be.false;
     });
 });
