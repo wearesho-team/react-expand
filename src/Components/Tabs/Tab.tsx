@@ -1,49 +1,34 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 import {
-    TabsContext,
-    TabElementProps,
-    TabsContextTypes,
-    TabElementPropTypes,
-    TabElementDefaultProps
-} from "./TabsProps";
+    ControlledExpandElementDefaultProps,
+    ControlledExpandElementPropTypes,
+    ControlledExpandElementProps,
+    ControlledExpandElement
+} from "../ControlledExpandElement";
+import { TabsContext, TabsContextTypes } from "./TabsControllerContext";
 
-export class Tab extends React.Component<TabElementProps> {
-    public static readonly contextTypes = {
-        ...ExpandContextTypes,
-        ...TabsContextTypes
-    };
-    public static readonly propTypes = TabElementPropTypes;
-    public static readonly defaultProps = TabElementDefaultProps;
+export class Tab extends React.Component<ControlledExpandElementProps> {
+    public static readonly contextTypes = TabsContextTypes;
+    public static readonly propTypes = ControlledExpandElementPropTypes;
+    public static readonly defaultProps = ControlledExpandElementDefaultProps;
 
-    public readonly context: ExpandContext & TabsContext;
+    public readonly context: TabsContext;
 
     public componentDidMount() {
-        this.context.registerTab(this.props.tabId);
+        this.context.registerTab(this.props.expandId);
     }
 
     public componentWillUnmount() {
-        this.context.unregisterTab(this.props.tabId);
+        this.context.unregisterTab(this.props.expandId);
     }
 
     public render(): JSX.Element {
-        const { tabId, activeClassName, ...childProps } = this.props;
-
         return (
-            <div
-                {...childProps}
-                data-expand-keep={tabId}
-                className={this.className}
-            >
-                {this.context.isExpanded(tabId) && this.props.children}
-            </div>
+            <ControlledExpandElement {...this.props}>
+                {this.props.children}
+            </ControlledExpandElement>
         );
-    }
-
-    protected get className(): string {
-        const { className, activeClassName, tabId } = this.props;
-        return `${(className || "")}${this.context.isExpanded(tabId) ? ` ${this.props.activeClassName}` : ""}`
     }
 }

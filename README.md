@@ -58,18 +58,13 @@ export class SomeComponent extends React.Component {
     }
 }
 ```
-### Presets
 
-#### Modal
-```jsx
-<ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
-<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
-    ...
-    <ModalCloseButton {...HTMLButtonElementProps}/>
-</Modal>
-```
+### Migration from 1.x.x to 2.x.x
 
 #### Collapse
+`Collapse` component is depricated. Use `ExpandControl` and `ControlledExpandElement` instead
+
+##### OLD
 ```jsx
 <Collapse 
     controlElement={({state: boolean, onClick: () => void}) => <i className={state ? "open": "closed"} onClick={onClick}/>} 
@@ -80,10 +75,32 @@ export class SomeComponent extends React.Component {
 </Collapse>
 ```
 
+##### NEW
+```jsx
+<ExpandControl 
+    {...HTMLButtonElementProps} 
+    expandId="collapse-id" 
+    activeClassName="is-active"
+    activeOnMount
+>
+    ...
+</ExpandControl>
+<ControlledExpandElement 
+    {...HTMLDivElementProps} 
+    expandId="collapse-id" 
+    activeClassName="is-opened"
+>
+      ...
+</ControlledExpandElement>
+```
+
 #### Tabs
+Prop `tabId` is depricated. Use `expandId` instead
+
+##### OLD
 ```jsx
 <TabsController>
-   <Header activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
+   <Header activeClassName="is-active" tabId="tab_1" {...HTMLDivElementProps} >
      ...
    </Header>
    <Header tabId="tab_2" {...HTMLDivElementProps} >
@@ -96,6 +113,148 @@ export class SomeComponent extends React.Component {
      ...
    </Tab>
 </TabsController>
+```
+
+##### NEW
+```jsx
+<TabsController>
+   <Header activeClassName="is-active" expandId="tab_1" {...HTMLDivElementProps} >
+     ...
+   </Header>
+   <Header expandId="tab_2" {...HTMLDivElementProps} >
+     ...
+   </Header>
+   <Tab activeClassName="is-active" expandId="tab_1" {...HTMLDivElementProps} >
+     ...
+   </Tab>
+   <Tab expandId="tab_2" {...HTMLDivElementProps}>
+     ...
+   </Tab>
+</TabsController>
+```
+
+#### Popup
+`Popup` component is depricated. Use `ExpandControl` and `ControlledExpandElement` instead
+
+##### OLD
+```jsx
+<PopupControl popupId="popup-id" triggerEvent={TriggerEvents.hover}>
+    // Single component
+    ...
+</PopupControl>
+<Popup popupId="popup-id" {...HTMLDivElementProps}>
+    ...
+</Popup>
+```
+
+##### NEW
+```jsx
+<ExpandControl 
+    {...HTMLButtonElementProps} 
+    expandId="popup-id" 
+    triggerEvent="hover" // or "click"
+    activeClassName="is-active"
+>
+    ...
+</ExpandControl>
+<ControlledExpandElement 
+    {...HTMLDivElementProps} 
+    expandId="popup-id" 
+    activeClassName="is-opened"
+>
+      ...
+</ControlledExpandElement>
+```
+
+#### Modal
+
+`ModalOpenButton` and `ModalCloseButton` components is depricated. Use `ExpandControl` instead
+
+##### OLD
+```jsx
+<ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
+<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+    ...
+    <ModalCloseButton {...HTMLButtonElementProps}/>
+</Modal>
+```
+
+##### NEW
+```jsx
+<ExpandControl expandId="some-id" staticState={true} {...HTMLButtonElementProps}/>
+<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+    ...
+    <ExpandControl expandId="some-id" staticState={false} {...HTMLButtonElementProps}/>
+</Modal>
+<ExpandControl expandId="some-id" staticState={false} {...HTMLButtonElementProps}/> // close button actualy can be outside modal
+```
+
+### Presets
+
+#### Tabs
+```jsx
+<TabsController>
+   <Header activeClassName="is-active" expandId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
+     ...
+   </Header>
+   <Header expandId="tab_2" {...HTMLDivElementProps} >
+     ...
+   </Header>
+   <Tab activeClassName="is-active" expandId="tab_1" {...HTMLDivElementProps} >
+     ...
+   </Tab>
+   <Tab expandId="tab_2" {...HTMLDivElementProps}>
+     ...
+   </Tab>
+</TabsController>
+```
+
+#### Modal
+```jsx
+<ExpandControl expandId="some-id" staticState={true} {...HTMLButtonElementProps}/>
+<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+    ...
+    <ExpandControl expandId="some-id" staticState={false} {...HTMLButtonElementProps}/>
+</Modal>
+<ExpandControl expandId="some-id" staticState={false} {...HTMLButtonElementProps}/>
+```
+
+#### Expand
+```jsx
+<ExpandControl 
+    {...HTMLButtonElementProps} 
+    expandId="some-expand-id" 
+    triggerEvent="hover"
+    activeClassName="is-active"
+    staticState={true}
+>
+    show
+</ExpandControl>
+<ExpandControl 
+    {...HTMLButtonElementProps} 
+    expandId="some-expand-id" 
+    triggerEvent="hover"
+    activeClassName="is-active"
+    staticState={false}
+>
+    hide
+</ExpandControl>
+<ExpandControl 
+    {...HTMLButtonElementProps} 
+    expandId="some-expand-id" 
+    triggerEvent="click"
+    activeClassName="is-active"
+    activeOnMount
+>
+    hide
+</ExpandControl>
+<ControlledExpandElement 
+    {...HTMLDivElementProps} 
+    expandId="some-expand-id" 
+    activeClassName="is-opened"
+>
+      ...
+</ControlledExpandElement>
 ```
 
 #### Slider
@@ -134,15 +293,4 @@ export class SomeComponent extends React.Component {
         ...
     </Dots>
 </SliderController>
-```
-
-#### Popup
-```jsx
-<PopupControl popupId="popup-id" triggerEvent={TriggerEvents.hover}>
-    // Single component
-    ...
-</PopupControl>
-<Popup popupId="popup-id" {...HTMLDivElementProps}>
-    ...
-</Popup>
 ```

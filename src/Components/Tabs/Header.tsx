@@ -2,50 +2,35 @@ import * as React from "react";
 import * as PropTypes from "prop-types";
 
 import {
-    TabsContext,
-    TabElementProps,
-    TabsContextTypes,
-    TabElementPropTypes,
-    TabElementDefaultProps
-} from "./TabsProps";
+    ExpandControl,
+    ExpandControlProps,
+    ExpandControlPropTypes,
+    ExpandControlDefaultProps
+} from "../ExpandControl";
+import { TabsContext, TabsContextTypes } from "./TabsControllerContext";
 
-import { ExpandContextTypes, ExpandContext } from "../ExpandController";
+export class Header extends React.Component<ExpandControlProps> {
+    public static readonly contextTypes = TabsContextTypes;
+    public static readonly propTypes = ExpandControlPropTypes;
+    public static readonly defaultProps = ExpandControlDefaultProps;
 
-export class Header extends React.Component<TabElementProps> {
-    public static readonly contextTypes = {
-        ...ExpandContextTypes,
-        ...TabsContextTypes
-    };
-    public static readonly propTypes = TabElementPropTypes;
-    public static readonly defaultProps = TabElementDefaultProps;
-
-    public readonly context: ExpandContext & TabsContext;
+    public readonly context: TabsContext;
 
     public render(): JSX.Element {
-        const { tabId, activeClassName, ...childProps } = this.props;
-
         return (
-            <div
-                {...childProps}
+            <ExpandControl
+                {...this.props}
                 onClick={this.handleTabActivate}
-                className={this.className}
-                data-expand-keep={tabId}
+                triggerEvent="click"
+                staticState
             >
                 {this.props.children}
-            </div>
+            </ExpandControl>
         );
     }
 
-    protected handleTabActivate = (event: React.MouseEvent<HTMLDivElement>): void => {
-        this.props.onClick && this.props.onClick(event);
-
-        if (!event.defaultPrevented) {
-            this.context.changeActiveTab(this.props.tabId);
-        }
-    }
-
-    protected get className(): string {
-        const { className, activeClassName, tabId } = this.props;
-        return `${(className || "")}${this.context.isExpanded(tabId) ? ` ${this.props.activeClassName}` : ""}`
+    protected handleTabActivate = (event: React.MouseEvent<HTMLButtonElement>): void => {
+        event.preventDefault();
+        this.context.changeActiveTab(this.props.expandId);
     }
 }
