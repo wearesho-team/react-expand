@@ -61,6 +61,17 @@ export class SomeComponent extends React.Component {
 
 ### Migration from 1.x.x to 2.x.x
 
+###### Short overview
+
+| v1.x.x               	| v2.x.x                                                                                	|
+|----------------------	|------------------------------------------------------------------------------------------	|
+| < Collapse />          	| < ExpandControl /> as controlElement < ControlledExpandElement /> as < Collapse /> 	|
+| < Header />           	| tabId -> expandId                                                                 	|
+| < Tab />              	| tabId -> expandId                                                                 	|
+| < Popup />            	| < ControllerExpandElement /> as < Popup />                                        	|
+| < ModalOpenButton />  	| < ExpandControl staticState={true} /> as < ModalOpenButton />                     	|
+| < ModalCloseButton /> 	| < ExpandControl staticState={false}/> as < ModalCloseButton />                    	|
+
 #### Collapse
 `Collapse` component is depricated. Use `ExpandControl` and `ControlledExpandElement` instead
 
