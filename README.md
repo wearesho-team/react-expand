@@ -68,7 +68,7 @@ export class SomeComponent extends React.Component {
 | < Collapse />          	| < ExpandControl /> as controlElement < ControlledExpandElement /> as < Collapse /> 	|
 | < Header />           	| tabId -> expandId                                                                 	|
 | < Tab />              	| tabId -> expandId                                                                 	|
-| < Popup />            	| < ControllerExpandElement /> as < Popup />                                        	|
+| < Popup />            	| < ControlledExpandElement /> as < Popup />                                        	|
 | < ModalOpenButton />  	| < ExpandControl staticState={true} /> as < ModalOpenButton />                     	|
 | < ModalCloseButton /> 	| < ExpandControl staticState={false}/> as < ModalCloseButton />                    	|
 

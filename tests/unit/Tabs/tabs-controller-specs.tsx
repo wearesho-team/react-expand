@@ -25,34 +25,29 @@ describe("<TabsController/>", () => {
         );
     });
 
-    afterEach(() =>  wrapper.unmount());
+    afterEach(() => wrapper.unmount());
 
     it("Should change active tab accordint to user choise", () => {
         wrapper.find(Tab).forEach((node) => {
-            switch (node.getDOMNode().getAttribute("data-expand-keep")) {
-                case "tab_1": {
-                    expect(node.getDOMNode().innerHTML).to.equal("");
+            switch (node.props().expandId) {
+                case "tab_1":
+                    expect(node.getDOMNode()).to.be.null;
                     break;
-                }
-                case "tab_2": {
-                    expect(node.getDOMNode().innerHTML).to.equal("Tab two");
+                case "tab_2":
+                    expect(node.getDOMNode()).to.exist;
                     break;
-                }
             }
         });
-
         wrapper.find(Header).first().simulate("click");
 
         wrapper.find(Tab).forEach((node) => {
-            switch (node.getDOMNode().getAttribute("data-expand-keep")) {
-                case "tab_1": {
-                    expect(node.getDOMNode().innerHTML).to.equal("Tab one");
+            switch (node.props().expandId) {
+                case "tab_1":
+                    expect(node.getDOMNode()).to.exist;
                     break;
-                }
-                case "tab_2": {
-                    expect(node.getDOMNode().innerHTML).to.equal("");
+                case "tab_2":
+                    expect(node.getDOMNode()).to.be.null;
                     break;
-                }
             }
         });
     });
