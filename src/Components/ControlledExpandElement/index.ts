@@ -1,2 +1,2 @@
-export * from "./ControllerExpandElement";
-export * from "./ControllerExpandElementProps";
+export * from "./ControlledExpandElement";
+export * from "./ControlledExpandElementProps";
