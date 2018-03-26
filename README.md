@@ -99,8 +99,8 @@ export class SomeComponent extends React.Component {
 </ExpandControl>
 <ControlledExpandElement 
     {...HTMLDivElementProps} 
-    expandId="collapse-id" 
-    activeClassName="is-opened"
+    expandId="collapse-id"
+    closeOnOutside
 >
       ...
 </ControlledExpandElement>
@@ -172,7 +172,7 @@ Prop `tabId` is depricated. Use `expandId` instead
 <ControlledExpandElement 
     {...HTMLDivElementProps} 
     expandId="popup-id" 
-    activeClassName="is-opened"
+    closeOnOutside
 >
       ...
 </ControlledExpandElement>
@@ -262,8 +262,7 @@ Prop `tabId` is depricated. Use `expandId` instead
 </ExpandControl>
 <ControlledExpandElement 
     {...HTMLDivElementProps} 
-    expandId="some-expand-id" 
-    activeClassName="is-opened"
+    expandId="some-expand-id"
 >
       ...
 </ControlledExpandElement>

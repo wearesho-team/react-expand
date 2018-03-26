@@ -5,32 +5,25 @@ import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 import {
     ControlledExpandElementProps,
     ControlledExpandElementPropTypes,
-    ControlledExpandElementDefaultProps
 } from "./ControlledExpandElementProps";
 
 export class ControlledExpandElement extends React.Component<ControlledExpandElementProps> {
-    public static readonly defaultProps = ControlledExpandElementDefaultProps;
     public static readonly propTypes = ControlledExpandElementPropTypes;
     public static readonly contextTypes = ExpandContextTypes;
 
     public readonly context: ExpandContext;
 
     public render(): React.ReactNode {
-        const { expandId, activeClassName, ...childProps } = this.props;
+        const { expandId, closeOnOutside, ...childProps } = this.props;
+        const dataAttr = `data-expand${!closeOnOutside ? "-keep" : ""}`;
 
         return this.context.isExpanded(expandId) && (
             <div
                 {...childProps}
-                data-expand-keep={expandId}
-                className={this.className}
+                {...{ [dataAttr]: expandId }}
             >
                 {this.props.children}
             </div>
         );
-    }
-
-    private get className(): string {
-        const { className, activeClassName, expandId } = this.props;
-        return `${(className || "")}${this.context.isExpanded(expandId) ? ` ${activeClassName}` : ""}`.trim();
     }
 }

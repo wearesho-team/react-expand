@@ -20,7 +20,7 @@ export class ExpandControl extends React.Component<ExpandControlProps> {
     }
 
     public render(): React.ReactNode {
-        const { activeClassName, expandId, triggerEvent, staticState, ...childProps } = this.props;
+        const { activeClassName, activeOnMount, expandId, triggerEvent, staticState, ...childProps } = this.props;
 
         return (
             <button
