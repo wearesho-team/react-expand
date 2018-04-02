@@ -5,6 +5,7 @@ import { ReactWrapper, mount } from "enzyme";
 import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
 
 import { Modal } from "../../../src/Components/Modal";
+import { ModalContainer } from "../../../src/Components/Modal/ModalContainer";
 
 describe("<Modal/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
@@ -12,7 +13,7 @@ describe("<Modal/>", () => {
     let context: ExpandContext;
     const modalId = "modal-id";
     const container = document.createElement("div");
-    container.id = Modal.containerName;
+    container.id = ModalContainer.containerName;
 
     beforeEach(() => {
         document.body.appendChild(container);
@@ -33,7 +34,7 @@ describe("<Modal/>", () => {
     });
 
     it("Should create container in body if it not exist", () => {
-        expect(document.getElementById(Modal.containerName)).to.exist;
+        expect(document.getElementById(ModalContainer.containerName)).to.exist;
     });
 
     it("Should open modal on mount if `defaultOpened` props passed", () => {
@@ -74,6 +75,6 @@ describe("<Modal/>", () => {
         container.remove();
         wrapper.mount();
 
-        expect(document.getElementById(Modal.containerName)).to.exist;
+        expect(document.getElementById(ModalContainer.containerName)).to.exist;
     });
 });
