@@ -13,7 +13,7 @@ describe("<Modal/>", () => {
     let context: ExpandContext;
     const modalId = "modal-id";
     const container = document.createElement("div");
-    container.id = ModalContainer.containerName;
+    container.id = ModalContainer.containerId;
 
     beforeEach(() => {
         document.body.appendChild(container);
@@ -34,7 +34,7 @@ describe("<Modal/>", () => {
     });
 
     it("Should create container in body if it not exist", () => {
-        expect(document.getElementById(ModalContainer.containerName)).to.exist;
+        expect(document.getElementById(ModalContainer.containerId)).to.exist;
     });
 
     it("Should open modal on mount if `defaultOpened` props passed", () => {
@@ -75,6 +75,6 @@ describe("<Modal/>", () => {
         container.remove();
         wrapper.mount();
 
-        expect(document.getElementById(ModalContainer.containerName)).to.exist;
+        expect(document.getElementById(ModalContainer.containerId)).to.exist;
     });
 });

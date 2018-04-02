@@ -12,7 +12,7 @@ export const ModalContainerPropTypes: {[P in keyof ModalContainerProps]: PropTyp
 
 export class ModalContainer extends React.Component<ModalContainerProps> {
     public static readonly propTypes = ModalContainerPropTypes;
-    public static readonly containerName = "modal-container";
+    public static readonly containerId = "modal-container";
 
     private container: HTMLDivElement;
 
@@ -20,11 +20,11 @@ export class ModalContainer extends React.Component<ModalContainerProps> {
         super(props);
 
         this.container = document.createElement("div");
-        this.container.id = ModalContainer.containerName;
+        this.container.id = ModalContainer.containerId;
     }
 
     public componentDidMount() {
-        const existContainer = document.getElementById(ModalContainer.containerName) as HTMLDivElement;
+        const existContainer = document.getElementById(ModalContainer.containerId) as HTMLDivElement;
 
         if (!existContainer) {
             document.body.appendChild(this.container);
