@@ -30,6 +30,8 @@ export class Header extends React.Component<ExpandControlProps> {
     }
 
     protected handleTabActivate = (event: React.MouseEvent<HTMLButtonElement>): void => {
+        this.props.onClick && this.props.onClick(event);
+
         event.preventDefault();
         this.context.changeActiveTab(this.props.expandId);
     }
