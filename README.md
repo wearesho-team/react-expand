@@ -205,7 +205,7 @@ Prop `tabId` is depricated. Use `expandId` instead
 
 #### Tabs
 ```jsx
-<TabsController>
+<TabsController defaultOpened="tab_2">
    <Header activeClassName="is-active" expandId="tab_1" {...HTMLDivElementProps} > // Click on header to activate according tab
      ...
    </Header>

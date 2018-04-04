@@ -51,4 +51,33 @@ describe("<TabsController/>", () => {
             }
         });
     });
+
+    it("Should change active tab on mount if according prop passed", () => {
+        wrapper.unmount();
+        wrapper = mount(
+            <ExpandController>
+                <TabsController defaultOpened="tab_1">
+                    <Header expandId="tab_1" />
+                    <Header expandId="tab_2" />
+                    <Tab expandId="tab_1">
+                        Tab one
+                    </Tab>
+                    <Tab expandId="tab_2">
+                        Tab two
+                    </Tab>
+                </TabsController>
+            </ExpandController>
+        );
+
+        wrapper.find(Tab).forEach((node) => {
+            switch (node.props().expandId) {
+                case "tab_1":
+                    expect(node.getDOMNode()).to.exist;
+                    break;
+                case "tab_2":
+                    expect(node.getDOMNode()).to.be.null;
+                    break;
+            }
+        });
+    });
 });
