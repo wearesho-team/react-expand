@@ -14,7 +14,7 @@ export interface TabsControllerProps {
 }
 
 export const TabsControllerPropTypes: {[P in keyof TabsControllerProps]: PropTypes.Validator<any>} = {
-    defaultOpened: PropTypes.string.isRequired
+    defaultOpened: PropTypes.string
 };
 
 export class TabsController extends React.Component<TabsControllerProps, TabsControllerState> {
