@@ -6,26 +6,32 @@ import { TabsContext, TabsContextTypes } from "./TabsControllerContext";
 
 export interface TabsControllerState {
     tabs: Set<string>;
+    activeTab?: string;
 }
 
-export class TabsController extends React.Component<{}, TabsControllerState> {
+export interface TabsControllerProps {
+    defaultOpened?: string;
+}
+
+export const TabsControllerPropTypes: {[P in keyof TabsControllerProps]: PropTypes.Validator<any>} = {
+    defaultOpened: PropTypes.string.isRequired
+};
+
+export class TabsController extends React.Component<TabsControllerProps, TabsControllerState> {
     public static readonly childContextTypes = TabsContextTypes;
+    public static readonly propTypes = TabsControllerPropTypes;
     public static readonly contextTypes = ExpandContextTypes;
 
     public readonly context: ExpandContext;
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            tabs: new Set()
-        };
-    }
+    public readonly state: TabsControllerState = {
+        tabs: new Set()
+    };
 
     public getChildContext(): TabsContext {
         return {
             changeActiveTab: this.changeActiveTab,
             unregisterTab: this.unregisterTab,
+            activeTab: this.state.activeTab,
             registerTab: this.registerTab
         }
     }
@@ -34,10 +40,11 @@ export class TabsController extends React.Component<{}, TabsControllerState> {
         return this.props.children;
     }
 
-    protected changeActiveTab = (id: string): void => {
-        this.state.tabs.forEach((tabId) => tabId !== id && this.context.changeExpandState(tabId, false)());
+    protected changeActiveTab = (activeTab: string): void => {
+        this.state.tabs.forEach((tabId) => tabId !== activeTab && this.context.changeExpandState(tabId, false)());
 
-        this.context.changeExpandState(id, true)();
+        this.setState({ activeTab });
+        this.context.changeExpandState(activeTab, true)();
     };
 
     protected unregisterTab = (id: string) => this.state.tabs.delete(id);
@@ -45,6 +52,10 @@ export class TabsController extends React.Component<{}, TabsControllerState> {
     protected registerTab = (id: string) => {
         this.state.tabs.add(id);
 
-        this.changeActiveTab(id);
+        this.changeActiveTab(
+            this.props.defaultOpened && this.state.tabs.has(this.props.defaultOpened)
+                ? this.props.defaultOpened
+                : id
+        );
     };
 }
