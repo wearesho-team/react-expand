@@ -36,6 +36,14 @@ export class TabsController extends React.Component<TabsControllerProps, TabsCon
         }
     }
 
+    public componentDidUpdate() {
+        this.state.tabs.forEach((id) => {
+            if (this.context.isExpanded(id) && this.state.activeTab !== id) {
+                return this.changeActiveTab(id);
+            }
+        });
+    }
+
     public render() {
         return this.props.children;
     }

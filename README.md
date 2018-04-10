@@ -203,6 +203,31 @@ Prop `tabId` is depricated. Use `expandId` instead
 
 ### Presets
 
+NOTE: You must provide context to child nodes with `<ExpandController>`
+
+#### HashListener
+```jsx
+// will expand element with expandId 'expandElementId1' and 'expandElementId2'
+// when href will be 'somepath/#expandElementId2/anotherPathIfYouWant/#expandElementId1'
+<HashListener>
+    <ControlledExpandElement expandId="expandElementId1"/>
+    <ControlledExpandElement expandId="expandElementId2"/>
+</HashListener>
+```
+
+#### HashControl
+```jsx
+// same as html link, except activeClassName, that binds when element with
+// href, that contains expand keys, is active
+<HashControl 
+    {...HTMLAnchorProps}
+    activeClassName="active" 
+    href="somepath/#expandElementId2/anotherPathIfYouWant/#expandElementId1"
+ >
+   ...
+</HashControl>
+```
+
 #### Tabs
 ```jsx
 <TabsController defaultOpened="tab_2">

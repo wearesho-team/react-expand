@@ -61,7 +61,7 @@ export const SliderControllerDefaultProps: {[P in keyof SliderControllerProps]?:
     autoPlayDelay: 5000
 };
 
-export class SliderController extends React.Component<SliderControllerProps> {
+export class SliderController extends React.Component<SliderControllerProps, SliderControllerState> {
     public static readonly childContextTypes = SliderControllerContextTypes;
     public static readonly defaultProps = SliderControllerDefaultProps;
     public static readonly propTypes = SliderControllerPropTypes;
@@ -109,6 +109,8 @@ export class SliderController extends React.Component<SliderControllerProps> {
     public componentDidUpdate() {
         if (this.isNoActiveSlide && this.state.slides.size) {
             this.changeActiveSlide(this.slidesArray[0]);
+        } else if (this.getSlideIndex(this.contextActiveSlide) !== this.state.activeSlide) {
+            this.changeActiveSlide(this.contextActiveSlide);
         }
     }
 
@@ -181,7 +183,11 @@ export class SliderController extends React.Component<SliderControllerProps> {
         return this.slidesArray[index];
     }
 
+    private get contextActiveSlide(): string {
+        return this.slidesArray.find((id) => this.context.isExpanded(id));
+    }
+
     private get isNoActiveSlide(): boolean {
-        return !this.slidesArray.find((id) => this.context.isExpanded(id));
+        return this.contextActiveSlide === undefined;
     }
 }
