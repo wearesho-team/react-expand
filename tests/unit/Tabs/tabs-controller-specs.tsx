@@ -27,7 +27,7 @@ describe("<TabsController/>", () => {
 
     afterEach(() => wrapper.unmount());
 
-    it("Should change active tab accordint to user choise", () => {
+    it("Should change active tab according to user choise", () => {
         wrapper.find(Tab).forEach((node) => {
             switch (node.props().expandId) {
                 case "tab_1":
