@@ -27,7 +27,7 @@ export class HashListener extends React.Component {
     }
 
     protected get hashElements(): Array<string> {
-        return window.location.hash.match(/#[^#\/\s]*/g)
+        return (window.location.hash.match(/#[^#\/\s]*/g) || [])
             .join("")
             .split("#")
             .filter((hash) => !!hash)

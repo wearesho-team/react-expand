@@ -5,10 +5,12 @@ import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 
 export interface HashControlProps extends React.HTMLProps<HTMLAnchorElement> {
     activeClassName?: string;
+    href: string;
 }
 
 export const HashControlPropTypes: {[P in keyof HashControlProps]: PropTypes.Validator<any>} = {
-    activeClassName: PropTypes.string
+    activeClassName: PropTypes.string,
+    href: PropTypes.string.isRequired
 };
 
 export const HashControlDefaultProps: {[P in keyof HashControlProps]?: HashControlProps[P]} = {
@@ -33,7 +35,7 @@ export class HashControl extends React.Component<HashControlProps> {
     }
 
     protected get className(): string {
-        const isActive = this.props.href.match(/#[^#\/\s]*/g)
+        const isActive = (this.props.href.match(/#[^#\/\s]*/g) || [])
             .some((hash) => this.context.isExpanded(hash.slice(1)));
         return `${this.props.className || ""} ${isActive ? this.props.activeClassName : ""}`.trim();
     }

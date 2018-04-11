@@ -40,4 +40,23 @@ describe("<HasControl/>", () => {
         ).to.be.true;
     });
 
+    it("Should not set active className when expanded key is not exist in href", () => {
+        wrapper.unmount();
+
+        wrapper = mount(
+            <ExpandController>
+                <HashControl href="">
+                    test
+                </HashControl>
+            </ExpandController>
+        );
+
+        context = wrapper.find(HashControl).instance().context;
+
+        context.changeExpandState("userHash1", true)();
+        expect(
+            wrapper.find(HashControl).getDOMNode().classList.contains(HashControlDefaultProps.activeClassName)
+        ).to.be.false;
+    });
+
 });

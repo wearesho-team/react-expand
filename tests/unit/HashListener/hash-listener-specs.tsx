@@ -9,17 +9,15 @@ describe("<HashListener/>", () => {
     let context: ExpandContext;
 
     beforeEach(() => {
-        window.location.hash = "#mountExpand";
-
         wrapper = mount(
             <ExpandController>
                 <HashListener>
                     <TabsController>
                         <Tab expandId="mountExpand">
-                            <span/>
+                            <span />
                         </Tab>
                         <Tab expandId="someAnotherExpand">
-                            <span/>
+                            <span />
                         </Tab>
                     </TabsController>
                 </HashListener>
@@ -32,6 +30,27 @@ describe("<HashListener/>", () => {
     afterEach(() => wrapper.unmount());
 
     it("Should change expand state on mount if hash exist", () => {
+        window.location.hash = "#mountExpand";
+
+        wrapper.unmount();
+
+        wrapper = mount(
+            <ExpandController>
+                <HashListener>
+                    <TabsController>
+                        <Tab expandId="mountExpand">
+                            <span />
+                        </Tab>
+                        <Tab expandId="someAnotherExpand">
+                            <span />
+                        </Tab>
+                    </TabsController>
+                </HashListener>
+            </ExpandController>
+        );
+
+        context = wrapper.find(HashListener).instance().context;
+
         expect(context.isExpanded("mountExpand")).to.be.true;
     });
 
