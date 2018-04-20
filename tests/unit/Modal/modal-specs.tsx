@@ -25,6 +25,7 @@ describe("<Modal/>", () => {
                 </Modal>
             </ExpandController>
         );
+        wrapper.find(Modal).instance().componentDidMount();
 
         context = wrapper.find(Modal).instance().context;
     });
