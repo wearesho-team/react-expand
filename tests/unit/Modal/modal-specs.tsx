@@ -2,10 +2,7 @@ import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
-import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
-
-import { Modal } from "../../../src/Components/Modal";
-import { ModalContainer } from "../../../src/Components/Modal/ModalContainer";
+import { Modal, ModalContainer, ExpandContext, ExpandController, StaticContainer } from "../../../src";
 
 describe("<Modal/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
@@ -14,6 +11,8 @@ describe("<Modal/>", () => {
     const modalId = "modal-id";
     const container = document.createElement("div");
     container.id = ModalContainer.containerId;
+
+    const originWindow = window;
 
     beforeEach(() => {
         document.body.appendChild(container);
@@ -30,6 +29,7 @@ describe("<Modal/>", () => {
     });
 
     afterEach(() => {
+        window = originWindow;
         wrapper.unmount();
     });
 
@@ -76,5 +76,11 @@ describe("<Modal/>", () => {
         wrapper.mount();
 
         expect(document.getElementById(ModalContainer.containerId)).to.exist;
+    });
+
+    it("Should render modal even when window does not exist", () => {
+        window = undefined;
+        wrapper.find(Modal).instance().render();
+        expect(wrapper.find(".modal-content")).to.have.length(1);
     });
 });

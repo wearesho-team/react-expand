@@ -330,3 +330,83 @@ NOTE: You must provide context to child nodes with `<ExpandController>`
     </Dots>
 </SliderController>
 ```
+
+### Server-side render
+
+Because `ReactDOM.createPortal` does not support SSR, you must modify code for correct work of `<Modal/>` component
+
+Client side
+```jsx
+export class Layout extends React.Component {
+    public render(): React.ReactNode {
+        return (
+            <ExpandController>
+                <Modal modalId="some-id" defaultOpened>
+                    ...
+                </Modal>
+            </ExapndController>
+        );
+    }    
+}
+```
+
+Server side
+```jsx
+app.get("*", (request, response) => {
+    ReactDOMServer.renderToNodeStream(
+        <html {...htmlAttrs} data-version={version}>
+            <body className={StaticContainer.childrenLength ? Modal.defaultProps.activeBodyClassName : ""}>
+                <div id="app">
+                    <Layout />
+                </div>
+                <div id={ModalContainer.containerId}>
+                    {StaticContainer.renderStatic()}
+                </div>
+            </body>
+        </html>
+    ).pipe(response);
+})
+```
+
+You also can use `<StaticContainer/>` and `<OuterContextPorvider/>` in your needs.
+
+```jsx
+export interface OuterContextProviderProps {
+    context: ExpandContext;
+}
+
+export const OuterContextProviderPropTypes: {[P in keyof OuterContextProviderProps]: PropTypes.Validator<any>} = {
+    context: PropTypes.shape(ExpandContextTypes).isRequired
+}
+
+export class OuterContextProvider extends React.Component<OuterContextProviderProps> {
+    public static readonly propTypes = OuterContextProviderPropTypes;
+    public static readonly childContextTypes = ExpandContextTypes;
+
+    public getChildContext(): ExpandContext {
+        return this.props.context;
+    }
+
+    public render(): React.ReactNode {
+        return this.props.children;
+    }
+}
+
+export class StaticContainer extends React.Component {
+    public static children: React.ReactNode = null;
+    public static childrenLength: number = 0;
+
+    public static renderStatic(): React.ReactNode {
+        const children = StaticContainer.children;
+        StaticContainer.children = null;
+        return children;
+    }
+
+    public render(): null {
+        StaticContainer.children = this.props.children;
+        StaticContainer.childrenLength = React.Children.count(this.props.children);
+        return null;
+    }
+
+}
+```

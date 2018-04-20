@@ -4,11 +4,12 @@ import { ReactWrapper, mount } from "enzyme";
 import { useFakeTimers, SinonFakeTimers } from "sinon";
 
 import {
+    ExpandContext,
+    ExpandController,
     SliderController,
     SliderControllerContext,
     SliderControllerDefaultProps
-} from "../../../src/Components/Slider";
-import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
+} from "../../../src";
 
 describe("<SliderController/>", () => {
     let wrapper: ReactWrapper<{}, {}>;

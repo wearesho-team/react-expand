@@ -2,8 +2,14 @@ import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
-import { SliderController, SliderControllerContext, Dots, DotsDefaultProps } from "../../../src/Components/Slider";
-import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
+import {
+    Dots,
+    ExpandContext,
+    DotsDefaultProps,
+    ExpandController,
+    SliderController,
+    SliderControllerContext,
+} from "../../../src";
 
 describe("<Dots>", () => {
     let wrapper: ReactWrapper<{}, {}>;

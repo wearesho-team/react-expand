@@ -4,7 +4,7 @@ import { ReactWrapper, mount } from "enzyme";
 
 import { ComponentWithContext } from "../helpers/ComponentWithContext";
 
-import { ExpandContext, ExpandController, ExpandContextTypes } from "../../../src/Components/ExpandController";
+import { ExpandContext, ExpandController, ExpandContextTypes } from "../../../src";
 
 describe("<ExpandController/>", () => {
     let wrapper: ReactWrapper<{}, {}>;

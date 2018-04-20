@@ -2,8 +2,7 @@ import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
-import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
-import { ExpandControl } from "../../../src/Components/ExpandControl";
+import { ExpandContext, ExpandController, ExpandControl } from "../../../src";
 
 describe("<ExpandControl/>", () => {
     let wrapper: ReactWrapper<{}, {}>;

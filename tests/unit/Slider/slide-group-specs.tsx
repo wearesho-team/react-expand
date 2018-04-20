@@ -5,11 +5,13 @@ import { ReactWrapper, mount } from "enzyme";
 import {
     Slide,
     SlideGroup,
+    ExpandContext,
+    ExpandController,
     SliderController,
+    ExpandContextTypes,
     SliderControllerContext,
-    SliderControllerContextTypes
-} from "../../../src/Components/Slider";
-import { ExpandContext, ExpandController, ExpandContextTypes } from "../../../src/Components/ExpandController";
+    SliderControllerContextTypes,
+} from "../../../src";
 
 describe("<SlideGroup>", () => {
     let wrapper: ReactWrapper<{}, {}>;
@@ -45,7 +47,7 @@ describe("<SlideGroup>", () => {
             <SlideGroup groupSize={1}>
                 {children}
             </SlideGroup>,
-            { context, childContextTypes: {...SliderControllerContextTypes, ...ExpandContextTypes}}
+            { context, childContextTypes: { ...SliderControllerContextTypes, ...ExpandContextTypes } }
         );
     });
 

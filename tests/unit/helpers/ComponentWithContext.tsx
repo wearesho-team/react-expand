@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { ExpandContext, ExpandContextTypes } from "../../../src/Components/ExpandController";
+import { ExpandContext, ExpandContextTypes } from "../../../src";
 
 export interface ComponentWithContextProps extends React.HTMLAttributes<HTMLDivElement> {
     expandKey: string;

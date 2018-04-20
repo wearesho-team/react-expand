@@ -6,7 +6,7 @@ import {
     Direction,
     SlideButton,
     SliderControllerContext
-} from "../../../src/Components/Slider";
+} from "../../../src";
 
 describe("<SlideButton>", () => {
     let wrapper: ReactWrapper<{}, {}>;

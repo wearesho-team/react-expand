@@ -2,8 +2,7 @@ import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
-import { Header, TabsController } from "../../../src/Components/Tabs";
-import { ExpandController, ExpandControlDefaultProps } from "../../../src";
+import { ExpandController, ExpandControlDefaultProps, Header, TabsController } from "../../../src";
 
 describe("<Header/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
