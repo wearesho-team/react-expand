@@ -1,6 +1,6 @@
 {
   "name": "react-expand",
-  "version": "2.5.1",
+  "version": "2.6.0",
   "description": "Simple element expand state controlling",
   "main": "build/index.js",
   "typings": "build/src/index.d.ts",
