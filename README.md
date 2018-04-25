@@ -93,6 +93,7 @@ export class SomeComponent extends React.Component {
     {...HTMLButtonElementProps} 
     expandId="collapse-id" 
     activeClassName="is-active"
+    state={{myData: true}}
     activeOnMount
 >
     ...
