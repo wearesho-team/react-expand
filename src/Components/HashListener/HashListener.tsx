@@ -8,12 +8,13 @@ export class HashListener extends React.Component {
     public readonly context: ExpandContext;
 
     public componentDidMount() {
-        window.addEventListener("hashchange", this.handleHashChange);
+        addEventListener("hashchange", this.handleHashChange);
+
         this.handleHashChange();
     }
 
     public componentWillUnmount() {
-        window.removeEventListener("hashchange", this.handleHashChange);
+        removeEventListener("hashchange", this.handleHashChange);
     }
 
     public render(): React.ReactNode {
@@ -27,7 +28,7 @@ export class HashListener extends React.Component {
     }
 
     protected get hashElements(): Array<string> {
-        return (window.location.hash.match(/#[^#\/\s]*/g) || [])
+        return (location.hash.match(/#[^#\/\s]*/g) || [])
             .join("")
             .split("#")
             .filter((hash) => !!hash)
