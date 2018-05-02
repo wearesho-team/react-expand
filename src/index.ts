@@ -1,6 +1,7 @@
 export * from "./Components/Tabs";
 export * from "./Components/Modal";
 export * from "./Components/Slider";
+export * from "./Components/Transition";
 export * from "./Components/HashControl";
 export * from "./Components/HashListener";
 export * from "./Components/ExpandControl";

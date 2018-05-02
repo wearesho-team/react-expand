@@ -1,12 +1,14 @@
 import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
+import { useFakeTimers, SinonFakeTimers } from "sinon";
 
 import { TabsController, Tab, Header } from "../../../src/Components/Tabs";
 import { ExpandController } from "../../../src";
 
 describe("<TabsController/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
+    let timer: SinonFakeTimers;
 
     beforeEach(() => {
         wrapper = mount(
@@ -23,11 +25,17 @@ describe("<TabsController/>", () => {
                 </TabsController>
             </ExpandController>
         );
+
+        timer = useFakeTimers();
     });
 
-    afterEach(() => wrapper.unmount());
+    afterEach(() => {
+        timer.restore();
+        wrapper.unmount();
+    });
 
     it("Should change active tab according to user choise", () => {
+
         wrapper.find(Tab).forEach((node) => {
             switch (node.props().expandId) {
                 case "tab_1":
@@ -39,6 +47,8 @@ describe("<TabsController/>", () => {
             }
         });
         wrapper.find(Header).first().simulate("click");
+
+        timer.tick(Tab.defaultProps.animationTimeout);
 
         wrapper.find(Tab).forEach((node) => {
             switch (node.props().expandId) {
