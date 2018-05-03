@@ -58,7 +58,9 @@ describe("<Modal/>", () => {
         );
 
         context = wrapper.find(Modal).instance().context;
+        expect(context.isExpanded(expandId)).to.be.true;
 
+        wrapper.find(".modal-content").simulate("click");
         expect(context.isExpanded(expandId)).to.be.true;
         document.body.click();
         expect(context.isExpanded(expandId)).to.be.false;

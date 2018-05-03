@@ -14,8 +14,6 @@ import { ExpandContext, ExpandController, ExpandContextTypes } from "../../../sr
 describe("<SlideGroup>", () => {
     let wrapper: ReactWrapper<{}, {}>;
 
-    const commonHandler = () => undefined;
-
     const context: ExpandContext & SliderControllerContext = {
         ...(new ExpandController({})).getChildContext(),
         ...(new SliderController({dragSensitive: 150})).getChildContext(),
