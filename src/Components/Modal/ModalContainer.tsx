@@ -35,10 +35,6 @@ export class ModalContainer extends React.Component<ModalContainerProps> {
         this.setBodyClassName();
     }
 
-    public componentWillUnmount() {
-        this.shouldBeRemoved && document.body.removeChild(this.container);
-    }
-
     public componentDidUpdate() {
         this.setBodyClassName();
     }
@@ -58,11 +54,5 @@ export class ModalContainer extends React.Component<ModalContainerProps> {
         if (!document.body.classList.contains(this.props.activeBodyClassName) && this.container.childElementCount) {
             document.body.classList.add(this.props.activeBodyClassName);
         }
-    }
-
-    protected get shouldBeRemoved(): boolean {
-        return this.container
-            && document.body.contains(this.container)
-            && !this.container.childElementCount;
     }
 }

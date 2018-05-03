@@ -2,6 +2,7 @@ import * as PropTypes from "prop-types";
 
 export interface ExpandControlProps extends React.HTMLProps<HTMLButtonElement> {
     ref?: any; // https://github.com/Microsoft/TypeScript/issues/16019
+    state?: any;
     expandId: string;
     staticState?: boolean;
     activeOnMount?: boolean;
@@ -10,6 +11,7 @@ export interface ExpandControlProps extends React.HTMLProps<HTMLButtonElement> {
 }
 
 export const ExpandControlPropTypes: {[T in keyof ExpandControlProps]: PropTypes.Validator<any>} = {
+    state: PropTypes.any,
     staticState: PropTypes.bool,
     activeOnMount: PropTypes.bool,
     activeClassName: PropTypes.string,
