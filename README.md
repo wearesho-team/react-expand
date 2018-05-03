@@ -344,7 +344,7 @@ export class Layout extends React.Component {
                 <Modal modalId="some-id" defaultOpened>
                     ...
                 </Modal>
-            </ExapndController>
+            </ExpandController>
         );
     }    
 }
@@ -368,4 +368,4 @@ app.get("*", (request, response) => {
 })
 ```
 
-You also can use `<StaticContainer/>` and `<OuterContextPorvider/>` in your needs.
+You also can use [`<StaticContainer/>`](src/Components/StaticContainer/StaticContainer.tsx) and [`<OuterContextPorvider/>`](src/Components/StaticContainer/OuterContextProvider.tsx) in your needs.
