@@ -7,7 +7,7 @@ import { OuterContextProvider, StaticContainer } from "../StaticContainer";
 import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 import { ModalContainer } from "./ModalContainer";
 
-import { isBrowserExist } from "../helpers/isBrowerExist";
+import { isBrowserExist } from "../helpers/isBrowserExist";
 
 export class Modal extends React.Component<ModalProps> {
     public static readonly contextTypes = ExpandContextTypes;
