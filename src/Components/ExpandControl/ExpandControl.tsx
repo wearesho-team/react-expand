@@ -20,7 +20,15 @@ export class ExpandControl extends React.Component<ExpandControlProps> {
     }
 
     public render(): React.ReactNode {
-        const { activeClassName, activeOnMount, expandId, triggerEvent, staticState, ...childProps } = this.props;
+        const {
+            activeClassName,
+            activeOnMount,
+            triggerEvent,
+            staticState,
+            expandId,
+            state,
+            ...childProps
+        } = this.props;
 
         return (
             <button
@@ -90,7 +98,7 @@ export class ExpandControl extends React.Component<ExpandControlProps> {
             : this.props.staticState;
 
         if (prevState !== nextState) {
-            this.context.changeExpandState(this.props.expandId, nextState)();
+            this.context.changeExpandState(this.props.expandId, nextState, this.props.state)();
         }
     }
 }
