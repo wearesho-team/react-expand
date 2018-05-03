@@ -14,7 +14,7 @@ Somewhere in code
 </ExpandController>
 ```
 Controlling expand state
-```jsx
+```tsx
 import * as React from "react";
 
 export class SomeComponent extends React.Component {
@@ -351,7 +351,7 @@ export class Layout extends React.Component {
 ```
 
 Server side
-```jsx
+```tsx
 app.get("*", (request, response) => {
     ReactDOMServer.renderToNodeStream(
         <html {...htmlAttrs} data-version={version}>
@@ -369,44 +369,3 @@ app.get("*", (request, response) => {
 ```
 
 You also can use `<StaticContainer/>` and `<OuterContextPorvider/>` in your needs.
-
-```jsx
-export interface OuterContextProviderProps {
-    context: ExpandContext;
-}
-
-export const OuterContextProviderPropTypes: {[P in keyof OuterContextProviderProps]: PropTypes.Validator<any>} = {
-    context: PropTypes.shape(ExpandContextTypes).isRequired
-}
-
-export class OuterContextProvider extends React.Component<OuterContextProviderProps> {
-    public static readonly propTypes = OuterContextProviderPropTypes;
-    public static readonly childContextTypes = ExpandContextTypes;
-
-    public getChildContext(): ExpandContext {
-        return this.props.context;
-    }
-
-    public render(): React.ReactNode {
-        return this.props.children;
-    }
-}
-
-export class StaticContainer extends React.Component {
-    public static children: React.ReactNode = null;
-    public static childrenLength: number = 0;
-
-    public static renderStatic(): React.ReactNode {
-        const children = StaticContainer.children;
-        StaticContainer.children = null;
-        return children;
-    }
-
-    public render(): null {
-        StaticContainer.children = this.props.children;
-        StaticContainer.childrenLength = React.Children.count(this.props.children);
-        return null;
-    }
-
-}
-```
