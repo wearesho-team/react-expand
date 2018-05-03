@@ -1,19 +1,17 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { SliderControllerContextTypes, SliderControllerContext } from "./SliderController";
-import { TransitionChildProps, TransitionChildPropTypes } from "../Transition";
+import { SliderControllerContextTypes, SliderControllerContext } from "./SliderControllerProps";
 import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 import { ControlledExpandElement } from "../ControlledExpandElement";
 
-export interface SlideProps extends React.HTMLProps<HTMLDivElement>, TransitionChildProps {
+export interface SlideProps extends React.HTMLProps<HTMLDivElement> {
     ref?: any;
     initial?: boolean;
 }
 
 export const SlidePropTypes: {[P in keyof SlideProps]: PropTypes.Validator<any>} = {
     initial: PropTypes.bool,
-    ...TransitionChildPropTypes
 };
 
 export class Slide extends React.Component<SlideProps> {
@@ -31,10 +29,14 @@ export class Slide extends React.Component<SlideProps> {
     constructor(props, context: SliderControllerContext & ExpandContext) {
         super(props, context);
 
+        // in some cases id does not generating on didMount
         this.id = context.registerSlide();
     }
 
     public componentDidMount() {
+        // must be updated after generating id
+        this.forceUpdate();
+
         this.props.initial && this.context.setAsActive(this.id);
     }
 
@@ -55,6 +57,7 @@ export class Slide extends React.Component<SlideProps> {
                     onMouseDown: this.handleMouseDown,
                     onTouchStart: this.handleTouchStart
                 })}
+                animationTimeout={this.context.animationTimeout}
             >
                 {this.props.children}
             </ControlledExpandElement>

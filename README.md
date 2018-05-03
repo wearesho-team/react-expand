@@ -60,6 +60,24 @@ export class SomeComponent extends React.Component {
 }
 ```
 
+### Animation
+
+All components that hiding/showing in DOM have prop `animationTimeout`.
+`react-transition-group` using for this.
+
+```jsx
+<ControlledExpandElement expandId="collapse-id" animationTimeout={500} >
+    ...
+</ControlledExpandElement>
+<Tab expandId="tab_2" animationTimeout={500}>
+    ...
+</Tab>
+// <SlideController/> pass animation props through context to <Slide/>
+<SliderController animationTimeout={500}>
+    ...
+</SliderController>
+```
+
 ### Migration from 1.x.x to 2.x.x
 
 ###### Short overview
@@ -184,8 +202,8 @@ Prop `tabId` is depricated. Use `expandId` instead
 
 ##### OLD
 ```jsx
-<ModalOpenButton expandId="some-id" {...HTMLButtonElementProps}/>
-<Modal expandId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+<ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
+<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
     ...
     <ModalCloseButton {...HTMLButtonElementProps}/>
 </Modal>
@@ -295,15 +313,15 @@ NOTE: You must provide context to child nodes with `<ExpandController>`
 
 #### Slider
 ```jsx
-<SliderController autoPlay autoPlayDelay={5000}>
-    <Slide disableDrag {...HTMLDivElementProps}>
+<SliderController autoPlay autoPlayDelay={5000} dragSensitive={500} disableDrag>
+    <Slide {...HTMLDivElementProps}>
         ...
     </Slide>
     // Slide that will be displayed on mount
     <Slide initial {...HTMLDivElementProps}>
         ...
     </Slide>
-    <Slide dragSensitive={500} {...HTMLDivElementProps}>
+    <Slide {...HTMLDivElementProps}>
         ...
     </Slide>
     <Dots {...HTMLButtonElementProps}/>

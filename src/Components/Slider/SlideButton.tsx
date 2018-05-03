@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { SliderControllerContextTypes, SliderControllerContext, Direction } from "./SliderController";
+import { SliderControllerContextTypes, SliderControllerContext, Direction } from "./SliderControllerProps";
 
 export interface SlideButtonProps extends React.HTMLProps<HTMLButtonElement> {
     direction: Direction

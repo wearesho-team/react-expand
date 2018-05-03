@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
 
-import { SliderControllerContext, SliderControllerContextTypes } from "./SliderController";
+import { SliderControllerContext, SliderControllerContextTypes } from "./SliderControllerProps";
 import { ExpandContext, ExpandContextTypes } from "../ExpandController";
 
 export interface DotsProps extends React.HTMLProps<HTMLButtonElement> {
