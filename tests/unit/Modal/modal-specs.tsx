@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
-import { useFakeTimers, SinonFakeTimers } from "sinon";
 
 import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
 
@@ -10,9 +9,8 @@ import { ModalContainer } from "../../../src/Components/Modal/ModalContainer";
 
 describe("<Modal/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
-    let timer: SinonFakeTimers;
-
     let context: ExpandContext;
+
     const expandId = "modal-id";
     const container = document.createElement("div");
     container.id = ModalContainer.containerId;
@@ -28,13 +26,10 @@ describe("<Modal/>", () => {
             </ExpandController>
         );
 
-        timer = useFakeTimers();
-
         context = wrapper.find(Modal).instance().context;
     });
 
     afterEach(() => {
-        timer.restore();
         wrapper.unmount();
     });
 
@@ -72,7 +67,7 @@ describe("<Modal/>", () => {
     it("Should change body class name according to state", () => {
         expect(document.body.className).to.equal("modal-open");
         context.changeExpandState(expandId)();
-        timer.tick(Modal.defaultProps.animationTimeout);
+        wrapper.find(Modal).instance().forceUpdate();
         expect(document.body.className).to.equal("");
     });
 

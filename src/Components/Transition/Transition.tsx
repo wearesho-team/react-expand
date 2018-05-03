@@ -7,12 +7,22 @@ export class Transition extends React.Component<TransitionProps> {
     public static readonly propTypes = TransitionPropTypes;
 
     public render(): React.ReactNode {
+        const { status, timeout, ...childProps } = this.props;
+
+        if (timeout <= 0) {
+            return status && (
+                <div {...childProps}>
+                    {this.props.children}
+                </div>
+            );
+        }
+
         return (
             <RTG.Transition
-                timeout={this.props.timeout}
-                in={this.props.status}
+                timeout={timeout}
                 unmountOnExit
                 mountOnEnter
+                in={status}
             >
                 {this.renderWithStatus}
             </RTG.Transition>

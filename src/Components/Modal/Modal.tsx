@@ -24,6 +24,15 @@ export class Modal extends React.Component<ModalProps> {
 
     public componentDidMount() {
         this.context.changeExpandState(this.props.expandId, !!this.props.defaultOpened)();
+        ModalContainer.modalsList.set(this.props.expandId, !!this.props.defaultOpened);
+    }
+
+    public componentWillUnmount() {
+        ModalContainer.modalsList.delete(this.props.expandId);
+    }
+
+    public componentDidUpdate() {
+        ModalContainer.modalsList.set(this.props.expandId, this.context.isExpanded(this.props.expandId));
     }
 
     public render(): JSX.Element {
@@ -35,18 +44,24 @@ export class Modal extends React.Component<ModalProps> {
                     {...childProps}
                     style={this.overlayStyle}
                     {...(childProps.closeOnOutside ?
-                        { onClick: this.handleOverlayClick }
+                        { onClick: this.context.changeExpandState(this.props.expandId, false) }
                         : {}
                     )}
                 >
-                    {this.props.children}
+                    <div
+                        {...(childProps.closeOnOutside ?
+                            { onClick: this.stopPropagation }
+                            : {}
+                        )}
+                    >
+                        {this.props.children}
+                    </div>
                 </ControlledExpandElement>
             </ModalContainer>
         );
     }
 
-    protected handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+    protected stopPropagation = (event: React.MouseEvent<HTMLDivElement>): void => {
         event.stopPropagation();
-        this.context.changeExpandState(this.props.expandId, false)
     }
 }

@@ -14,7 +14,7 @@ export class ModalContainer extends React.Component<ModalContainerProps> {
     public static readonly propTypes = ModalContainerPropTypes;
     public static readonly containerId = "modal-container";
 
-    public static isModalOpened = false;
+    public static modalsList: Map<string, boolean> = new Map();
 
     private container: HTMLDivElement;
 
@@ -52,12 +52,12 @@ export class ModalContainer extends React.Component<ModalContainerProps> {
         );
     }
 
-    protected setBodyClassName = () => {
-        if (document.body.classList.contains(this.props.activeBodyClassName) && !ModalContainer.isModalOpened) {
+    protected setBodyClassName = (): void => {
+        if (document.body.classList.contains(this.props.activeBodyClassName) && !this.isSomeModalOpened) {
             document.body.classList.remove(this.props.activeBodyClassName);
         }
 
-        if (!document.body.classList.contains(this.props.activeBodyClassName) && ModalContainer.isModalOpened) {
+        if (!document.body.classList.contains(this.props.activeBodyClassName) && this.isSomeModalOpened) {
             document.body.classList.add(this.props.activeBodyClassName);
         }
     }
@@ -66,5 +66,9 @@ export class ModalContainer extends React.Component<ModalContainerProps> {
         return this.container
             && document.body.contains(this.container)
             && !this.container.childElementCount;
+    }
+
+    protected get isSomeModalOpened(): boolean {
+        return !!Array.from(ModalContainer.modalsList.values()).find((opened) => opened);
     }
 }
