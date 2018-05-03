@@ -14,7 +14,7 @@ Somewhere in code
 </ExpandController>
 ```
 Controlling expand state
-```jsx
+```tsx
 import * as React from "react";
 
 export class SomeComponent extends React.Component {
@@ -331,3 +331,42 @@ NOTE: You must provide context to child nodes with `<ExpandController>`
     </Dots>
 </SliderController>
 ```
+
+### Server-side render
+
+Because `ReactDOM.createPortal` does not support SSR, you must modify code for correct work of `<Modal/>` component
+
+Client side
+```jsx
+export class Layout extends React.Component {
+    public render(): React.ReactNode {
+        return (
+            <ExpandController>
+                <Modal modalId="some-id" defaultOpened>
+                    ...
+                </Modal>
+            </ExpandController>
+        );
+    }    
+}
+```
+
+Server side
+```tsx
+app.get("*", (request, response) => {
+    ReactDOMServer.renderToNodeStream(
+        <html {...htmlAttrs} data-version={version}>
+            <body className={StaticContainer.childrenLength ? Modal.defaultProps.activeBodyClassName : ""}>
+                <div id="app">
+                    <Layout />
+                </div>
+                <div id={ModalContainer.containerId}>
+                    {StaticContainer.renderStatic()}
+                </div>
+            </body>
+        </html>
+    ).pipe(response);
+})
+```
+
+You also can use [`<StaticContainer/>`](src/Components/StaticContainer/StaticContainer.tsx) and [`<OuterContextPorvider/>`](src/Components/StaticContainer/OuterContextProvider.tsx) in your needs.
