@@ -1,19 +1,24 @@
 import * as PropTypes from "prop-types";
 
-export interface ModalProps extends React.HTMLProps<HTMLDivElement> {
+import {
+    ControlledExpandElementProps,
+    ControlledExpandElementPropTypes,
+    ControlledExpandElementDefaultProps
+} from "../ControlledExpandElement";
+
+export interface ModalProps extends ControlledExpandElementProps {
     activeBodyClassName?: string;
-    closeOnOutside?: boolean;
     defaultOpened?: boolean;
-    modalId: string;
+    ref?: any;
 }
 
 export const ModalPropTypes: {[P in keyof ModalProps]: PropTypes.Validator<any>} = {
     activeBodyClassName: PropTypes.string,
-    modalId: PropTypes.string.isRequired,
-    closeOnOutside: PropTypes.bool,
-    defaultOpened: PropTypes.bool
+    defaultOpened: PropTypes.bool,
+    ...ControlledExpandElementPropTypes
 };
 
 export const ModalDefaultProps: {[P in keyof ModalProps]?: ModalProps[P]} = {
-    activeBodyClassName: "modal-open"
+    activeBodyClassName: "modal-open",
+    ...ControlledExpandElementDefaultProps
 };

@@ -1,9 +1,9 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 import * as PropTypes from "prop-types";
 
-import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 import { ModalPropTypes, ModalProps, ModalDefaultProps } from "./ModalProps";
+import { ExpandContextTypes, ExpandContext } from "../ExpandController";
+import { ControlledExpandElement } from "../ControlledExpandElement";
 import { ModalContainer } from "./ModalContainer";
 
 export class Modal extends React.Component<ModalProps> {
@@ -23,30 +23,30 @@ export class Modal extends React.Component<ModalProps> {
     };
 
     public componentDidMount() {
-        this.context.changeExpandState(this.props.modalId, !!this.props.defaultOpened)();
+        this.context.changeExpandState(this.props.expandId, !!this.props.defaultOpened)();
     }
 
     public render(): JSX.Element {
+        const { activeBodyClassName, defaultOpened, ...childProps } = this.props;
+
         return (
             <ModalContainer activeBodyClassName={this.props.activeBodyClassName}>
-                {this.context.isExpanded(this.props.modalId) && this.modalWrapper}
+                <ControlledExpandElement
+                    {...childProps}
+                    style={this.overlayStyle}
+                    {...(childProps.closeOnOutside ?
+                        { onClick: this.handleOverlayClick }
+                        : {}
+                    )}
+                >
+                    {this.props.children}
+                </ControlledExpandElement>
             </ModalContainer>
         );
     }
 
-    protected get modalWrapper(): JSX.Element {
-        const { activeBodyClassName, modalId, closeOnOutside, defaultOpened, ...childProps } = this.props;
-        const dataAttr = `data-expand${!closeOnOutside ? "-keep" : ""}`;
-
-        return (
-            <div
-                {...childProps}
-                style={this.overlayStyle}
-                {...{ [dataAttr]: modalId }}
-                {...(closeOnOutside ? { onClick: this.context.changeExpandState(modalId, false) } : {})}
-            >
-                {this.props.children}
-            </div>
-        );
+    protected handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>): void => {
+        event.stopPropagation();
+        this.context.changeExpandState(this.props.expandId, false)
     }
 }

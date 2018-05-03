@@ -9,3 +9,15 @@ export const TransitionPropTypes: {[P in keyof TransitionProps]: PropTypes.Valid
     timeout: PropTypes.number.isRequired,
     status: PropTypes.bool.isRequired
 };
+
+export interface TransitionChildProps {
+    animationTimeout?: number;
+}
+
+export const TransitionChildPropTypes: {[P in keyof TransitionChildProps]: PropTypes.Validator<any>} = {
+    animationTimeout: PropTypes.number
+};
+
+export const TransitionChildDefaultProps: {[P in keyof TransitionChildProps]?: TransitionChildProps[P]} = {
+    animationTimeout: 0
+};

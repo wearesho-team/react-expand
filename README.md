@@ -184,8 +184,8 @@ Prop `tabId` is depricated. Use `expandId` instead
 
 ##### OLD
 ```jsx
-<ModalOpenButton modalId="some-id" {...HTMLButtonElementProps}/>
-<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+<ModalOpenButton expandId="some-id" {...HTMLButtonElementProps}/>
+<Modal expandId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
     ...
     <ModalCloseButton {...HTMLButtonElementProps}/>
 </Modal>
@@ -194,7 +194,7 @@ Prop `tabId` is depricated. Use `expandId` instead
 ##### NEW
 ```jsx
 <ExpandControl expandId="some-id" staticState={true} {...HTMLButtonElementProps}/>
-<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+<Modal expandId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
     ...
     <ExpandControl expandId="some-id" staticState={false} {...HTMLButtonElementProps}/>
 </Modal>
@@ -249,7 +249,7 @@ NOTE: You must provide context to child nodes with `<ExpandController>`
 #### Modal
 ```jsx
 <ExpandControl expandId="some-id" staticState={true} {...HTMLButtonElementProps}/>
-<Modal modalId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
+<Modal expandId="some-id" defaultOpened closeOnOutside {...HTMLDivElementProps}>
     ...
     <ExpandControl expandId="some-id" staticState={false} {...HTMLButtonElementProps}/>
 </Modal>

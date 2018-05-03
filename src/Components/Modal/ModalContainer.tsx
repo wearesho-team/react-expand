@@ -14,6 +14,8 @@ export class ModalContainer extends React.Component<ModalContainerProps> {
     public static readonly propTypes = ModalContainerPropTypes;
     public static readonly containerId = "modal-container";
 
+    public static isModalOpened = false;
+
     private container: HTMLDivElement;
 
     constructor(props) {
@@ -51,11 +53,11 @@ export class ModalContainer extends React.Component<ModalContainerProps> {
     }
 
     protected setBodyClassName = () => {
-        if (document.body.classList.contains(this.props.activeBodyClassName) && !this.container.childElementCount) {
+        if (document.body.classList.contains(this.props.activeBodyClassName) && !ModalContainer.isModalOpened) {
             document.body.classList.remove(this.props.activeBodyClassName);
         }
 
-        if (!document.body.classList.contains(this.props.activeBodyClassName) && this.container.childElementCount) {
+        if (!document.body.classList.contains(this.props.activeBodyClassName) && ModalContainer.isModalOpened) {
             document.body.classList.add(this.props.activeBodyClassName);
         }
     }

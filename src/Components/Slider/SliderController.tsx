@@ -8,38 +8,40 @@ export enum Direction {
     next = "next"
 };
 
+export interface SlideControlProps {
+    disabled: boolean;
+    setAsActive: () => void;
+}
+
 export interface SliderControllerContext {
+    disableDrag: boolean;
+    dragSensitive: number;
+    slidesList: Array<string>;
     registerSlide: () => string;
     setAsActive: (id: string) => void;
     unregisterSlide: (id: string) => void;
     slideControl: {
-        [Direction.next]: {
-            disabled: boolean;
-            setAsActive: () => void;
-        },
-        [Direction.prev]: {
-            disabled: boolean;
-            setAsActive: () => void;
-        }
+        [Direction.next]: SlideControlProps;
+        [Direction.prev]: SlideControlProps;
     },
-    slidesList: Array<string>;
 }
 
+const slideControlPropTypes: {[P in keyof SlideControlProps]: PropTypes.Validator<any>} = {
+    disabled: PropTypes.bool.isRequired,
+    setAsActive: PropTypes.func.isRequired
+};
+
 export const SliderControllerContextTypes: {[P in keyof SliderControllerContext]: PropTypes.Validator<any>} = {
-    unregisterSlide: PropTypes.func.isRequired,
-    registerSlide: PropTypes.func.isRequired,
+    disableDrag: PropTypes.bool.isRequired,
     setAsActive: PropTypes.func.isRequired,
+    registerSlide: PropTypes.func.isRequired,
+    dragSensitive: PropTypes.number.isRequired,
+    unregisterSlide: PropTypes.func.isRequired,
+    slidesList: PropTypes.arrayOf(PropTypes.string).isRequired,
     slideControl: PropTypes.shape({
-        [Direction.next]: PropTypes.shape({
-            disabled: PropTypes.bool.isRequired,
-            setAsActive: PropTypes.func.isRequired
-        }).isRequired,
-        [Direction.prev]: PropTypes.shape({
-            disabled: PropTypes.bool.isRequired,
-            setAsActive: PropTypes.func.isRequired
-        }).isRequired,
-    }).isRequired,
-    slidesList: PropTypes.arrayOf(PropTypes.string).isRequired
+        [Direction.next]: PropTypes.shape(slideControlPropTypes).isRequired,
+        [Direction.prev]: PropTypes.shape(slideControlPropTypes).isRequired,
+    }).isRequired
 };
 
 export interface SliderControllerState {
@@ -49,16 +51,21 @@ export interface SliderControllerState {
 
 export interface SliderControllerProps {
     autoPlay?: boolean;
+    disableDrag?: boolean;
+    dragSensitive?: number;
     autoPlayDelay?: number;
 }
 
 export const SliderControllerPropTypes: {[P in keyof SliderControllerProps]: PropTypes.Validator<any>} = {
+    dragSensitive: PropTypes.number,
     autoPlayDelay: PropTypes.number,
+    disableDrag: PropTypes.bool,
     autoPlay: PropTypes.bool
 };
 
 export const SliderControllerDefaultProps: {[P in keyof SliderControllerProps]?: SliderControllerProps[P]} = {
-    autoPlayDelay: 5000
+    autoPlayDelay: 5000,
+    dragSensitive: 150
 };
 
 export class SliderController extends React.Component<SliderControllerProps, SliderControllerState> {
@@ -82,14 +89,16 @@ export class SliderController extends React.Component<SliderControllerProps, Sli
             slidesList: this.slidesArray,
             registerSlide: this.registerSlide,
             setAsActive: this.changeActiveSlide,
+            disableDrag: !!this.props.disableDrag,
             unregisterSlide: this.unregisterSlide,
+            dragSensitive: this.props.dragSensitive,
             slideControl: {
                 [Direction.next]: {
                     disabled: this.state.activeSlide < 0 || this.state.activeSlide === this.state.slides.size - 1,
                     setAsActive: this.setAsActiveNext
                 },
                 [Direction.prev]: {
-                    disabled: this.state.activeSlide < 0 || this.state.activeSlide === 0,
+                    disabled: this.state.activeSlide <= 0,
                     setAsActive: this.setAsActivPrev
                 }
             },
@@ -133,18 +142,14 @@ export class SliderController extends React.Component<SliderControllerProps, Sli
 
     protected unregisterSlide = (id: string): void => {
         this.state.slides.delete(id);
-        this.setState({
-            activeSlide: -1
-        });
+        this.setState({ activeSlide: -1 });
     }
 
     protected changeActiveSlide = (id: string): void => {
         this.context.changeExpandState(id, true)();
         this.state.slides.forEach((slideId) => slideId !== id && this.context.changeExpandState(slideId, false)());
 
-        this.setState({
-            activeSlide: this.getSlideIndex(id)
-        });
+        this.setState({ activeSlide: this.getSlideIndex(id) });
     }
 
     protected setAsActiveNext = (): void => {
@@ -167,12 +172,10 @@ export class SliderController extends React.Component<SliderControllerProps, Sli
         return Array.from(this.state.slides.values())
     }
 
-    private autoPlay = () => {
-        if (this.state.activeSlide === this.state.slides.size - 1) {
-            this.changeActiveSlide(this.getSlideByIndex(0));
-        } else {
-            this.setAsActiveNext();
-        }
+    private autoPlay = (): void => {
+        this.state.activeSlide === (this.state.slides.size - 1)
+            ? this.changeActiveSlide(this.getSlideByIndex(0))
+            : this.setAsActiveNext();
     }
 
     private getSlideIndex = (id: string): number => {

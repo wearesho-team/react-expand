@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
+import { useFakeTimers, SinonFakeTimers } from "sinon";
 
 import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
 
@@ -9,9 +10,10 @@ import { ModalContainer } from "../../../src/Components/Modal/ModalContainer";
 
 describe("<Modal/>", () => {
     let wrapper: ReactWrapper<{}, {}>;
+    let timer: SinonFakeTimers;
 
     let context: ExpandContext;
-    const modalId = "modal-id";
+    const expandId = "modal-id";
     const container = document.createElement("div");
     container.id = ModalContainer.containerId;
 
@@ -20,16 +22,19 @@ describe("<Modal/>", () => {
 
         wrapper = mount(
             <ExpandController>
-                <Modal defaultOpened modalId={modalId}>
+                <Modal defaultOpened expandId={expandId}>
                     <div className="modal-content">Modal content</div>
                 </Modal>
             </ExpandController>
         );
 
+        timer = useFakeTimers();
+
         context = wrapper.find(Modal).instance().context;
     });
 
     afterEach(() => {
+        timer.restore();
         wrapper.unmount();
     });
 
@@ -38,20 +43,20 @@ describe("<Modal/>", () => {
     });
 
     it("Should open modal on mount if `defaultOpened` props passed", () => {
-        expect(context.isExpanded(modalId)).to.be.true;
+        expect(context.isExpanded(expandId)).to.be.true;
         expect(document.body.className).to.equal("modal-open");
     });
 
     it("Should close modal on outside click if `closeOnOutside` prop passed", () => {
-        expect(context.isExpanded(modalId)).to.be.true;
+        expect(context.isExpanded(expandId)).to.be.true;
         document.body.click();
-        expect(context.isExpanded(modalId)).to.be.true;
+        expect(context.isExpanded(expandId)).to.be.true;
 
         wrapper.unmount();
 
         wrapper = mount(
             <ExpandController>
-                <Modal defaultOpened modalId={modalId} closeOnOutside>
+                <Modal defaultOpened expandId={expandId} closeOnOutside>
                     <div className="modal-content">Modal content</div>
                 </Modal>
             </ExpandController>
@@ -59,14 +64,15 @@ describe("<Modal/>", () => {
 
         context = wrapper.find(Modal).instance().context;
 
-        expect(context.isExpanded(modalId)).to.be.true;
+        expect(context.isExpanded(expandId)).to.be.true;
         document.body.click();
-        expect(context.isExpanded(modalId)).to.be.false;
+        expect(context.isExpanded(expandId)).to.be.false;
     });
 
     it("Should change body class name according to state", () => {
         expect(document.body.className).to.equal("modal-open");
-        context.changeExpandState(modalId)();
+        context.changeExpandState(expandId)();
+        timer.tick(Modal.defaultProps.animationTimeout);
         expect(document.body.className).to.equal("");
     });
 

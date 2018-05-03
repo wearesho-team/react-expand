@@ -30,7 +30,9 @@ describe("<SlideButton>", () => {
                 setAsActive: () => prevSlideActivated = true
             }
         },
-        slidesList: []
+        slidesList: [],
+        disableDrag: false,
+        dragSensitive: 150,
     };
 
     beforeEach(() => {

@@ -2,7 +2,7 @@ import { expect } from "chai";
 import * as React from "react";
 import { ReactWrapper, mount } from "enzyme";
 
-import { SliderController, SliderControllerContext, Slide, SlideDefaultProps } from "../../../src/Components/Slider";
+import { SliderControllerContext, Slide, SliderControllerDefaultProps } from "../../../src/Components/Slider";
 import { ExpandContext, ExpandController } from "../../../src/Components/ExpandController";
 
 describe("<Slide>", () => {
@@ -24,6 +24,8 @@ describe("<Slide>", () => {
         setAsActive: () => {
             slideActivated = true;
         },
+        disableDrag: false,
+        dragSensitive: SliderControllerDefaultProps.dragSensitive,
         unregisterSlide: commonHandler,
         slideControl: {
             next: {
@@ -84,14 +86,14 @@ describe("<Slide>", () => {
         expect(wrapper.getDOMNode()).to.exist;
     });
 
-    it("Should ignore drag when `disableDrag` prop passed", () => {
-        wrapper.setProps({
+    it("Should ignore drag when `disableDrag` context prop passed", () => {
+        wrapper.setContext({
             disableDrag: true
         });
         wrapper.update();
 
         wrapper.simulate("mouseDown", {
-            clientX: SlideDefaultProps.dragSensitive * 2
+            clientX: SliderControllerDefaultProps.dragSensitive * 2
         });
 
         wrapper.simulate("mouseUp", {
@@ -108,7 +110,7 @@ describe("<Slide>", () => {
         });
 
         wrapper.simulate("mouseUp", {
-            clientX: SlideDefaultProps.dragSensitive * 2
+            clientX: SliderControllerDefaultProps.dragSensitive * 2
         });
 
         expect(prevSlideActivated).to.be.true;
@@ -122,7 +124,7 @@ describe("<Slide>", () => {
 
         wrapper.simulate("touchEnd", {
             changedTouches: [{
-                clientX: SlideDefaultProps.dragSensitive * 2
+                clientX: SliderControllerDefaultProps.dragSensitive * 2
             }]
         });
 
@@ -131,7 +133,7 @@ describe("<Slide>", () => {
 
     it("Should set next slide active on drag to right", () => {
         wrapper.simulate("mouseDown", {
-            clientX: SlideDefaultProps.dragSensitive * 2
+            clientX: SliderControllerDefaultProps.dragSensitive * 2
         });
 
         wrapper.simulate("mouseUp", {
@@ -143,7 +145,7 @@ describe("<Slide>", () => {
 
         wrapper.simulate("touchStart", {
             changedTouches: [{
-                clientX: SlideDefaultProps.dragSensitive * 2
+                clientX: SliderControllerDefaultProps.dragSensitive * 2
             }]
         });
 
@@ -158,7 +160,7 @@ describe("<Slide>", () => {
 
     it("Should ignore drag less that sensitive", () => {
         wrapper.simulate("mouseDown", {
-            clientX: SlideDefaultProps.dragSensitive / 2
+            clientX: SliderControllerDefaultProps.dragSensitive / 2
         });
 
         wrapper.simulate("mouseUp", {

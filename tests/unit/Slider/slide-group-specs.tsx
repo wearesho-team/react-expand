@@ -17,21 +17,8 @@ describe("<SlideGroup>", () => {
     const commonHandler = () => undefined;
 
     const context: ExpandContext & SliderControllerContext = {
-        registerSlide: commonHandler,
-        setAsActive: commonHandler,
-        unregisterSlide: commonHandler,
-        slideControl: {
-            next: {
-                disabled: false,
-                setAsActive: commonHandler,
-            },
-            prev: {
-                disabled: false,
-                setAsActive: commonHandler,
-            }
-        },
-        slidesList: [],
-        ...(new ExpandController({})).getChildContext()
+        ...(new ExpandController({})).getChildContext(),
+        ...(new SliderController({dragSensitive: 150})).getChildContext(),
     };
 
     const children = [
@@ -47,6 +34,7 @@ describe("<SlideGroup>", () => {
             </SlideGroup>,
             { context, childContextTypes: {...SliderControllerContextTypes, ...ExpandContextTypes}}
         );
+
     });
 
     afterEach(() => {

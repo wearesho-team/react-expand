@@ -28,6 +28,8 @@ describe("<Dots>", () => {
             }
         },
         slidesList,
+        disableDrag: false,
+        dragSensitive: 150,
         ...(new ExpandController({})).getChildContext()
     };
 
