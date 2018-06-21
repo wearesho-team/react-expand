@@ -33,7 +33,6 @@ describe("<HashListener/>", () => {
         window.location.hash = "#mountExpand";
 
         wrapper.unmount();
-
         wrapper = mount(
             <ExpandController>
                 <HashListener>
@@ -61,5 +60,31 @@ describe("<HashListener/>", () => {
 
         expect(context.isExpanded("userHash1")).to.be.true;
         expect(context.isExpanded("userHash2")).to.be.true;
+    });
+
+    it("Should call `onHashExpanded` if it passed on hash changed", () => {
+        let triggered = false;
+        const handler = () => triggered = true;
+
+        wrapper.unmount();
+        wrapper = mount(
+            <ExpandController>
+                <HashListener onHashExpanded={handler}>
+                    <TabsController>
+                        <Tab expandId="mountExpand">
+                            <span />
+                        </Tab>
+                        <Tab expandId="someAnotherExpand">
+                            <span />
+                        </Tab>
+                    </TabsController>
+                </HashListener>
+            </ExpandController>
+        );
+
+        window.location.hash = "#someAnotherExpand";
+        (wrapper.find(HashListener).instance() as any).handleHashChange();
+
+        expect(triggered).to.be.true;
     });
 });

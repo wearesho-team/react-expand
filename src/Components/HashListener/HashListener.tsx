@@ -1,9 +1,19 @@
 import * as React from "react";
+import * as PropTypes from "prop-types";
 
 import { ExpandContextTypes, ExpandContext } from "../ExpandController";
 
-export class HashListener extends React.Component {
+export interface HashListenerProps {
+    onHashExpanded?: (expandId: string) => void;
+}
+
+export const HashListenerPropTypes: {[P in keyof HashListenerProps]: PropTypes.Validator<any>} = {
+    onHashExpanded: PropTypes.func
+};
+
+export class HashListener extends React.Component<HashListenerProps> {
     public static readonly contextTypes = ExpandContextTypes;
+    public static readonly propTypes = HashListenerPropTypes;
 
     public readonly context: ExpandContext;
 
@@ -24,6 +34,7 @@ export class HashListener extends React.Component {
     protected handleHashChange = (): void => {
         this.hashElements.forEach((hashId) => {
             this.context.changeExpandState(hashId, true)();
+            this.props.onHashExpanded && this.props.onHashExpanded(hashId);
         });
     }
 
