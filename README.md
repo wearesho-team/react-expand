@@ -210,7 +210,7 @@ NOTE: You must provide context to child nodes with `<ExpandController>`
 ```jsx
 // will expand element with expandId 'expandElementId1' and 'expandElementId2'
 // when href will be 'somepath/#expandElementId2/anotherPathIfYouWant/#expandElementId1'
-<HashListener>
+<HashListener onHashExpanded={(expandId: string) => console.log(expandId)}>
     <ControlledExpandElement expandId="expandElementId1"/>
     <ControlledExpandElement expandId="expandElementId2"/>
 </HashListener>
