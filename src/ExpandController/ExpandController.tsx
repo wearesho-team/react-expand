@@ -1,17 +1,5 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
-
-export interface ExpandContext<TState = any> {
-    changeExpandState: (key: string, open?: boolean, state?: TState) => () => void;
-    isExpanded: (key: string) => boolean;
-    getState: (key: string) => TState;
-}
-
-export const ExpandContextTypes = {
-    changeExpandState: PropTypes.func.isRequired,
-    isExpanded: PropTypes.func.isRequired,
-    getState: PropTypes.func.isRequired,
-};
+import { ExpandContext, ExpandContextValue } from "./ExpandContext";
 
 export interface ExpandControllerState {
     expanded: { [key: string]: boolean };
@@ -19,13 +7,12 @@ export interface ExpandControllerState {
 }
 
 export class ExpandController extends React.Component<{}, ExpandControllerState> {
-    public static readonly childContextTypes = ExpandContextTypes;
     public readonly state = {
         expanded: {},
         state: {},
     };
 
-    public getChildContext(): ExpandContext {
+    protected get childContextValue(): ExpandContextValue {
         return {
             changeExpandState: this.getExpandOpenHandler,
             getState: this.getExpandState,
@@ -42,10 +29,10 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
     }
 
     public render() {
-        return this.props.children;
+        return <ExpandContext.Provider value={this.childContextValue} children={this.props.children} />;
     }
 
-    protected getExpandOpenHandler: ExpandContext["changeExpandState"] =
+    protected getExpandOpenHandler: ExpandContextValue["changeExpandState"] =
         (key: string, open?: boolean, state: any = undefined) => (): void => {
             if (open === undefined) {
                 open = !this.isExpanded(key);
@@ -60,13 +47,9 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
             this.forceUpdate();
         }
 
-    protected isExpanded: ExpandContext["isExpanded"] = (key: string): boolean => {
-        return !!this.state.expanded[key];
-    }
+    protected isExpanded: ExpandContextValue["isExpanded"] = (key: string): boolean => !!this.state.expanded[key];
 
-    protected getExpandState = (key: string) => {
-        return this.state.state[key];
-    }
+    protected getExpandState = (key: string) => this.state.state[key];
 
     protected handleDocumentClick = (event: any): void => {
         const target = event.target;

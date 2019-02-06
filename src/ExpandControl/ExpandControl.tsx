@@ -1,19 +1,13 @@
 import * as React from "react";
-import * as PropTypes from "prop-types";
 
-import { ExpandContext, ExpandContextTypes } from "../ExpandController";
-import {
-    ExpandControlProps,
-    ExpandControlPropTypes,
-    ExpandControlDefaultProps
-} from "./ExpandControlProps";
+import { ExpandContext, ExpandContextValue } from "../ExpandController";
+import { ExpandControlProps, ExpandControlDefaultProps } from "./ExpandControlProps";
 
 export class ExpandControl extends React.Component<ExpandControlProps> {
-    public static readonly propTypes = ExpandControlPropTypes;
-    public static readonly contextTypes = ExpandContextTypes;
+    public static readonly contextType = ExpandContext;
     public static readonly defaultProps = ExpandControlDefaultProps;
 
-    public readonly context: ExpandContext;
+    public readonly context: ExpandContextValue;
 
     public componentDidMount() {
         this.props.activeOnMount && this.context.changeExpandState(this.props.expandId, true)();

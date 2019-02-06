@@ -13,7 +13,10 @@ const env = debug ? 'local' : 'production';
 console.log("Building in " + env + " environment. Debug: " + debug.toString());
 
 const config = {
-        entry: ["./src/index.ts"],
+        entry: {
+            index: "./src/index.ts",
+        },
+
         target: "node",
         externals: [nodeExternals()],
 
@@ -21,11 +24,12 @@ const config = {
             filename: 'index.js',
             path: path.resolve('./build'),
             publicPath: "/",
-            library: "react-criteria-table",
+            library: "react-expand",
             libraryTarget: "umd",
         },
 
         devtool: debug ? "source-map" : false,
+        mode: debug ? "development" : "production",
 
         resolve: {
             extensions: [".ts", ".js", ".json", ".jsx", ".tsx",],
@@ -36,7 +40,7 @@ const config = {
         },
 
         module: {
-            loaders: [
+            rules: [
                 {
                     test: /\.tsx?$/,
                     loaders: [
@@ -44,14 +48,15 @@ const config = {
                             loader: "babel-loader",
                             query: {
                                 presets: [
-                                    'react',
-                                    ['env', {
+                                    '@babel/preset-react',
+                                    ['@babel/preset-env', {
                                         "targets": {
                                             "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
-                                        }
+                                        },
+                                        exclude: ["transform-regenerator"]
                                     }]
                                 ],
-                                "plugins": ["transform-object-rest-spread"]
+                                "plugins": ["@babel/plugin-proposal-object-rest-spread"]
                             }
                         },
                         "awesome-typescript-loader"
@@ -59,20 +64,19 @@ const config = {
                 },
                 {
                     test: /\.jsx?$/,
-                    exclude:
-                        [/node_modules/],
-                    loader:
-                        "babel-loader",
+                    exclude: [/node_modules/],
+                    loader: "babel-loader",
                     query: {
                         presets: [
-                            'react',
-                            ['env', {
+                            '@babel/preset-react',
+                            ['@babel/preset-env', {
                                 "targets": {
                                     "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
-                                }
+                                },
+                                exclude: ["transform-regenerator"]
                             }]
                         ],
-                        "plugins": ["transform-object-rest-spread"]
+                        "plugins": ["@babel/plugin-proposal-object-rest-spread"]
                     }
                 },
                 {
