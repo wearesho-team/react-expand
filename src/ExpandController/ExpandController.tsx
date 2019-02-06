@@ -32,7 +32,7 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
         return <ExpandContext.Provider value={this.childContextValue} children={this.props.children} />;
     }
 
-    protected getExpandOpenHandler: ExpandContext["changeExpandState"] =
+    protected getExpandOpenHandler: ExpandContextValue["changeExpandState"] =
         (key: string, open?: boolean, state: any = undefined) => (): void => {
             if (open === undefined) {
                 open = !this.isExpanded(key);
@@ -47,7 +47,7 @@ export class ExpandController extends React.Component<{}, ExpandControllerState>
             this.forceUpdate();
         }
 
-    protected isExpanded: ExpandContext["isExpanded"] = (key: string): boolean => !!this.state.expanded[key];
+    protected isExpanded: ExpandContextValue["isExpanded"] = (key: string): boolean => !!this.state.expanded[key];
 
     protected getExpandState = (key: string) => this.state.state[key];
 
