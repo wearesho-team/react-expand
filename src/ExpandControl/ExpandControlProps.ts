@@ -1,4 +1,4 @@
-import * as PropTypes from "prop-types";
+import * as React from "react";
 
 export interface ExpandControlProps extends React.HTMLProps<HTMLButtonElement> {
     ref?: any; // https://github.com/Microsoft/TypeScript/issues/16019
@@ -9,15 +9,6 @@ export interface ExpandControlProps extends React.HTMLProps<HTMLButtonElement> {
     activeClassName?: string;
     triggerEvent?: "hover" | "click";
 }
-
-export const ExpandControlPropTypes: {[T in keyof ExpandControlProps]: PropTypes.Validator<any>} = {
-    state: PropTypes.any,
-    staticState: PropTypes.bool,
-    activeOnMount: PropTypes.bool,
-    activeClassName: PropTypes.string,
-    expandId: PropTypes.string.isRequired,
-    triggerEvent: PropTypes.oneOf(["hover", "click"])
-};
 
 export const ExpandControlDefaultProps: {[T in keyof ExpandControlProps]?: ExpandControlProps[T]} = {
     activeClassName: "active-control",
