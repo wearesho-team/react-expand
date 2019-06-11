@@ -22,10 +22,10 @@ export class SlideButton extends React.Component<SlideButtonProps> {
 
         return (
             <button
-                type="button"
                 {...childProps}
                 onClick={this.handleClick}
                 disabled={this.context.slideControl[this.props.direction].disabled}
+                type="button"
             >
                 {this.props.children}
             </button>

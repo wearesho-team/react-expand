@@ -31,10 +31,10 @@ export class Dots extends React.Component<DotsProps> {
 
         return this.context.slidesList.map((id) => (
             <button
-                type="button"
                 {...childProps}
                 className={this.getClassName(id)}
                 onClick={this.handleClick(id)}
+                type={"button"}
                 key={id}
             >
                 {this.props.children}

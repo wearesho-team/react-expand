@@ -4,7 +4,7 @@ const
     webpack = require('webpack');
 
 const
-    CleanWebpackPlugin = require('clean-webpack-plugin'),
+    CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin,
     nodeExternals = require("webpack-node-externals");
 
 const debug = process.env.NODE_ENV !== 'production';
@@ -36,24 +36,11 @@ const config = {
         },
 
         module: {
-            loaders: [
+            rules: [
                 {
                     test: /\.tsx?$/,
                     loaders: [
-                        {
-                            loader: "babel-loader",
-                            query: {
-                                presets: [
-                                    'react',
-                                    ['env', {
-                                        "targets": {
-                                            "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
-                                        }
-                                    }]
-                                ],
-                                "plugins": ["transform-object-rest-spread"]
-                            }
-                        },
+                        "babel-loader",
                         "awesome-typescript-loader"
                     ]
                 },
@@ -63,17 +50,6 @@ const config = {
                         [/node_modules/],
                     loader:
                         "babel-loader",
-                    query: {
-                        presets: [
-                            'react',
-                            ['env', {
-                                "targets": {
-                                    "browsers": ["last 2 versions", "safari >= 10", "ie >= 11"]
-                                }
-                            }]
-                        ],
-                        "plugins": ["transform-object-rest-spread"]
-                    }
                 },
                 {
                     enforce: "pre",
@@ -84,9 +60,7 @@ const config = {
         },
 
         plugins: [
-            new webpack.NamedModulesPlugin(),
-            new CleanWebpackPlugin(path.resolve('./build')),
-            new webpack.optimize.ModuleConcatenationPlugin(),
+            new CleanWebpackPlugin(),
             new webpack.NodeEnvironmentPlugin(),
             new webpack.DefinePlugin({
                 'process.env': {

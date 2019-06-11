@@ -13,17 +13,19 @@ describe("<ExpandController/>", () => {
 
     beforeEach(() => {
         wrapper = mount(
-            <ExpandController>
-                <ComponentWithContext expandKey="expand" data-expand="expand" />,
-            </ExpandController>
+            (
+                <ExpandController>
+                    <ComponentWithContext expandKey="expand" data-expand="expand"/>
+                </ExpandController>
+            ),
+            { attachTo: document.querySelector("#root") }
         );
 
-        document.querySelector("#root").appendChild(wrapper.getDOMNode());
         context = wrapper.find(ComponentWithContext).instance().context;
     });
 
     afterEach(() => {
-        document.querySelector("#root").removeChild(wrapper.getDOMNode());
+        wrapper.detach();
     });
 
     it("Should return `false` on `isExpanded` if element not expanded", () => {
@@ -69,16 +71,20 @@ describe("<ExpandController/>", () => {
         expect(context.isExpanded("expand")).to.be.false;
     });
 
-    it("Shoudld not change state if click event triggered on element when `data-expand-keep` passed", () => {
-        document.querySelector("#root").removeChild(wrapper.getDOMNode());
+    it("Should not change state if click event triggered on element when `data-expand-keep` passed", () => {
+        wrapper.detach();
 
         wrapper = mount(
-            <ExpandController>
-                <ComponentWithContext expandKey="expand-keep" data-expand-keep="expand-keep" />,
-            </ExpandController>
+            (
+                <ExpandController>
+                    <ComponentWithContext expandKey="expand-keep" data-expand-keep="expand-keep"/>,
+                </ExpandController>
+            ),
+            {
+                attachTo: document.querySelector("#root"),
+            }
         );
 
-        document.querySelector("#root").appendChild(wrapper.getDOMNode());
         context = wrapper.find(ComponentWithContext).instance().context;
 
         wrapper.find(".expand-button").simulate("click");
